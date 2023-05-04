@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './app_router.dart';
+import './screens/auth_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      onGenerateRoute: AppRouter().generateRoute,
+      // onGenerateRoute: AppRouter().generateRoute,
       title: 'Hotspot',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -23,6 +25,11 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
+      home: AuthScreen(),
+      routes: {
+        AuthScreen.routeName: (context) => AuthScreen(),
+        HomePage.routeName: (context) => HomePage(),
+      },
     );
   }
 }

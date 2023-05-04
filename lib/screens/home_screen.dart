@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../app_router.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    AppRouter().generateRoute;
+    // AppRouter().generateRoute;
     return Scaffold(
       appBar: my_appBar(context),
       body: Center(
