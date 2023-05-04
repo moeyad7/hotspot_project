@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotspot_project/screens/home_screen.dart';
-import 'compnents/app_bar.dart';
-import 'compnents/nav_bar.dart';
+
 import './app_router.dart';
 
 void main() {
@@ -13,11 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: AppRouter().generateRoute,
-      initialRoute: HomePage.routeName,
-
       title: 'Hotspot',
-      // theme: lightThemeData(context),
-      // darkTheme: darkThemeData(context),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Color(0xFFF58A07),
@@ -28,9 +22,7 @@ class MyApp extends StatelessWidget {
           surface: Color(0x00000000),
         ),
       ),
-      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      //useMaterial3: true,
     );
   }
 }

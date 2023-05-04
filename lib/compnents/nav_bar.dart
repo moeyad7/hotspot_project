@@ -10,7 +10,7 @@ class NavBarComponent extends StatelessWidget {
     return BottomNavigationBar(
       backgroundColor: ThemeData().colorScheme.primary,
       selectedItemColor: ThemeData().colorScheme.secondary,
-      unselectedItemColor: ThemeData().colorScheme.surface,
+      unselectedItemColor: ThemeData().colorScheme.tertiary,
       currentIndex: selectedTab.index,
       onTap: (int index) {
         final selectedTab = NavigationItem.values[index];
@@ -27,6 +27,9 @@ class NavBarComponent extends StatelessWidget {
           case NavigationItem.profile:
             Navigator.pushNamed(context, '/ProfilePage');
             break;
+          case NavigationItem.trending:
+            Navigator.pushNamed(context, '/Trending');
+            break;
         }
       },
       items: const [
@@ -35,24 +38,24 @@ class NavBarComponent extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.menu_book),
-          label: 'Courses',
+          icon: Icon(Icons.search),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add),
+          label: 'Add',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
           label: 'Profile',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'School Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.wallet),
-          label: 'Wallet',
+          icon: Icon(Icons.trending_up),
+          label: 'Trending',
         ),
       ],
     );
   }
 }
 
-enum NavigationItem { home, search, add, profile }
+enum NavigationItem { home, search, add, profile, trending }

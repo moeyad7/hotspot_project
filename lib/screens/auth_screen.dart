@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../compnents/auth/auth_form.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -11,8 +13,8 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeData().colorScheme.background,
-      
+      backgroundColor: Color(0xFFFDF1ED),
+      body: AuthForm(),
     );
   }
 }
