@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme_data.dart';
 
 class NavBarComponent extends StatelessWidget {
   const NavBarComponent({super.key, required this.selectedTab});

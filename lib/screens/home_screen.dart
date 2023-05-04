@@ -17,8 +17,6 @@ class _HomePageState extends State<HomePage> {
     AppRouter().generateRoute;
     return Scaffold(
       appBar: my_appBar(context),
-       
-      
       body: Center(
         child: ElevatedButton(
           child: const Text('Go to the next page'),
@@ -26,6 +24,9 @@ class _HomePageState extends State<HomePage> {
             Navigator.pushNamed(context, '/second');
           },
         ),
+      ),
+      bottomNavigationBar: NavBarComponent(
+        selectedTab: NavigationItem.home,
       ),
     );
   }

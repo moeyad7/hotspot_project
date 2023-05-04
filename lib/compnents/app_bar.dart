@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import '../theme_data.dart';
 
 AppBar my_appBar(BuildContext context) {
   return AppBar(
-    title: const Text('H' + '🔥' + 'tspot'),
-    backgroundColor: ThemeData().colorScheme.primary,
+    title: Text(
+      'H' + '🔥' + 'tspot',
+      style: TextStyle(
+        color: ThemeData().colorScheme.surface,
+        fontSize: 25,
+      ),
+    ),
+    foregroundColor: ThemeData().colorScheme.primary,
   );
 }
