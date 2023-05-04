@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hotspot_project/compnents/buttons/buttons.dart';
 
 Card post_card(BuildContext context) {
   return Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
+    color: ThemeData().colorScheme.surface,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
     ),
@@ -92,21 +94,39 @@ Card post_card(BuildContext context) {
             ),
           ),
         ),
-        Expanded(
-            child: Row(
+        Row(
           children: [
             Column(children: [
               Container(
-                  color: ThemeData().colorScheme.background,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  margin: EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 8),
                   child: Text(
                     "See the wonders of the long extinct YAHIA. The person who started it all. The AR/VR implementer of the week. Get a picture now before he is physical no more! ☠",
                   ))
             ]),
-            Column(//Row(),
-                )
+            Column(children: <Widget>[
+              Row(
+                children: [
+                  CustomButton(
+                      name: 'seen',
+                      color: Colors.black,
+                      type: 'icons',
+                      icon: Icons.check_circle_outline_rounded),
+                  CustomButton(
+                      name: 'save',
+                      color: Colors.black,
+                      type: 'icons',
+                      icon: Icons.bookmark_border_rounded),
+                ],
+              ),
+              CustomButton(
+                  name: 'More',
+                  color: ThemeData().colorScheme.tertiary,
+                  type: 'elevated',
+                  icon: Icons.zoom_out_map_rounded)
+            ])
           ],
-        ))
+        )
       ],
     ),
   );
