@@ -205,7 +205,9 @@ class _AuthFormState extends State<AuthForm> {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/HomePage');
+                },
               ),
             ],
           ),
