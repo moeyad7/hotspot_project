@@ -52,7 +52,7 @@ class PostCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: NetworkImage("https://cdn.discordapp.com/attachments/1102648982624284784/1103798049953812500/20230505_003816.jpg"),
+                  image: NetworkImage(touristSites[0].imageUrl),
                   fit: BoxFit.fill,
                   alignment: Alignment.bottomCenter,
                 ),
@@ -60,11 +60,11 @@ class PostCard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withOpacity(0),
-                      Colors.black.withOpacity(0.5),
+                      Colors.black.withOpacity(0.8),
                     ],
                   ),
                   borderRadius: BorderRadius.only(

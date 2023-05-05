@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class LatLng {
   final double latitude;
   final double longitude;
@@ -14,6 +13,7 @@ class TouristSite {
   final String description;
   final List<String> category;
   final String imageUrl;
+  final DateTime added;
 
   TouristSite({
     required this.name,
@@ -21,20 +21,21 @@ class TouristSite {
     required this.description,
     required this.category,
     required this.imageUrl,
+    required this.added,
   });
 }
 
 final List<TouristSite> touristSites = [
-    TouristSite(
+  TouristSite(
       name: 'The Pyramids of Giza',
       rating: 4.8,
       description:
           'The Pyramids of Giza are one of the most famous landmarks in Egypt and the world. They are located on the outskirts of Cairo and are the only remaining wonder of the ancient world.',
       category: ['Historical Landmark', 'Monument'],
       imageUrl:
-        "https://cdn.pixabay.com/photo/2016/09/08/21/09/pyramids-1654439_960_720.jpg",
-    ),
-    TouristSite(
+          "https://i.natgeofe.com/n/535f3cba-f8bb-4df2-b0c5-aaca16e9ff31/giza-plateau-pyramids.jpg?w=374&h=249",
+      added: DateTime.now()),
+  TouristSite(
       name: 'The Sphinx',
       rating: 4.3,
       description:
@@ -42,8 +43,8 @@ final List<TouristSite> touristSites = [
       category: ['Historical Landmark', 'Monument'],
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/09/08/21/09/pyramids-1654439_960_720.jpg',
-    ),
-    TouristSite(
+      added: DateTime.now()),
+  TouristSite(
       name: 'The Egyptian Museum',
       rating: 4.5,
       description:
@@ -51,8 +52,8 @@ final List<TouristSite> touristSites = [
       category: ['Museum', 'Historical Landmark'],
       imageUrl:
           'https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg',
-    ),
-    TouristSite(
+      added: DateTime.now()),
+  TouristSite(
       name: 'Karnak Temple Complex',
       rating: 4.0,
       description:
@@ -60,8 +61,8 @@ final List<TouristSite> touristSites = [
       category: ['Historical Landmark', 'Temple'],
       imageUrl:
           'https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg',
-    ),
-    TouristSite(
+      added: DateTime.now()),
+  TouristSite(
       name: 'Abu Simbel Temples',
       rating: 4.5,
       description:
@@ -69,19 +70,23 @@ final List<TouristSite> touristSites = [
       category: ['Historical Landmark', 'Temple'],
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/09/08/21/09/pyramids-1654439_960_720.jpg',
-    ),
-    TouristSite(
-        name: "Valley of the Kings",
-        rating :4.3 ,
-        description : "The Valley of the Kings is located near Luxor and is home to many tombs of pharaohs from the New Kingdom period.",
-        category : ["Historical Landmark", "Tomb"],
-        imageUrl : "https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg",
-    ),
-    TouristSite(
-        name : "Luxor Temple",
-        rating :4.0 ,
-        description : "Luxor Temple is located in Luxor and was built during the New Kingdom period.",
-        category : ["Historical Landmark","Temple"],
-        imageUrl : "https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg",
-    ),
-  ];
+      added: DateTime.now()),
+  TouristSite(
+      name: "Valley of the Kings",
+      rating: 4.3,
+      description:
+          "The Valley of the Kings is located near Luxor and is home to many tombs of pharaohs from the New Kingdom period.",
+      category: ["Historical Landmark", "Tomb"],
+      imageUrl:
+          "https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg",
+      added: DateTime.now()),
+  TouristSite(
+      name: "Luxor Temple",
+      rating: 4.0,
+      description:
+          "Luxor Temple is located in Luxor and was built during the New Kingdom period.",
+      category: ["Historical Landmark", "Temple"],
+      imageUrl:
+          "https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg",
+      added: DateTime.now()),
+];

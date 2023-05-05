@@ -223,7 +223,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/HomePage');
+                  Navigator.popAndPushNamed(context, '/HomePage');
                 },
               ),
             ],
