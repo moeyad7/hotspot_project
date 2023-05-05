@@ -24,22 +24,23 @@ AppBar my_appBar(BuildContext context) {
             child: Container(
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.exit_to_app),
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.red,
+                  ),
                   SizedBox(width: 8),
-                  Text('Logout'),
+                  Text('Sign Out'),
                 ],
               ),
             ),
-            value: 'logout',
+            value: 'signout',
           )
         ],
-        onChanged: (itemIdentifier) async{
-          if (itemIdentifier == 'logout') {
-            
+        onChanged: (itemIdentifier) async {
+          if (itemIdentifier == 'signout') {
             FirebaseAuth.instance.signOut();
 
-            await GoogleSignIn().signOut();
-
+            await GoogleSignIn().signOut(); 
           }
         },
       )
