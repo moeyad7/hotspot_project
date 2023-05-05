@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: my_appBar(context),
       body: Center(
-        child:post_card(context),
+        child: PostCard(),
         
       ),
       bottomNavigationBar: NavBarComponent(

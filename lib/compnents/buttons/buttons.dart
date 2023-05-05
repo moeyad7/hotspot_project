@@ -19,6 +19,7 @@ class CustomButton extends StatelessWidget {
     switch (type) {
       case 'chips':
         return Chip(
+
           label: Row(
             children: [
               if (icon != null) Icon(icon),
