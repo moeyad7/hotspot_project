@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class AuthForm extends StatefulWidget {
   @override
@@ -74,6 +75,16 @@ class _AuthFormState extends State<AuthForm> {
                 padding: EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
+                    SignInButtonCustom(
+                      button: Buttons.Google,
+                      signIn: () {},
+                    ),
+                    SizedBox(height: 10),
+                    SignInButtonCustom(
+                      button: Buttons.Facebook,
+                      signIn: () {},
+                    ),
+                    SizedBox(height: 10),
                     TextFormField(
                       validator: (value) {
                         if (value!.isEmpty || !value.contains('@')) {
@@ -218,6 +229,30 @@ class _AuthFormState extends State<AuthForm> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SignInButtonCustom extends StatelessWidget {
+  final Buttons button;
+  final Function signIn;
+  const SignInButtonCustom({
+    required this.button,
+    required this.signIn,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 50,
+      child: SignInButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        button,
+        onPressed: signIn,
       ),
     );
   }
