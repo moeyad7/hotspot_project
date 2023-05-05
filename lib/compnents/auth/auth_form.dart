@@ -41,14 +41,23 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState!.save();
 
-      widget.submitFn(
-        _userEmail.trim(),
-        _userPassword.trim(),
-        _userName.trim(),
-        _userDateOfBirth,
-        _isLogin,
-        context,
-      );
+      if (_userPassword.trim() == _userReEnterPassword.trim()) {
+        widget.submitFn(
+          _userEmail.trim(),
+          _userPassword.trim(),
+          _userName.trim(),
+          _userDateOfBirth,
+          _isLogin,
+          context,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Passwords do not match!'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
+      }
     }
   }
 
@@ -171,9 +180,6 @@ class _AuthFormState extends State<AuthForm> {
                           if (value!.isEmpty || value.length < 7) {
                             return 'Password must be at least 7 characters long.';
                           }
-                          if (_userReEnterPassword != _userPassword) {
-                            return 'Password must be same as above.';
-                          }
                           return null;
                         },
                         save: (value) {
@@ -219,26 +225,28 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                child: Text(
-                  _isLogin ? 'Sign In' : 'Sign Up',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+              if (widget.isLoading) CircularProgressIndicator(),
+              if (!widget.isLoading)
+                ElevatedButton(
+                  child: Text(
+                    _isLogin ? 'Sign In' : 'Sign Up',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  onPressed: () {
+                    _trySubmit();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFF58A07),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   ),
                 ),
-                onPressed: () {
-                  _trySubmit();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFF58A07),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-              ),
               TextButton(
                 child: Text(
                   'continue as a guest',
