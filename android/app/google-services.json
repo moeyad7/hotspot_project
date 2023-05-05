@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "873402932064",
+    "project_id": "hotspot-project-41fbb",
+    "storage_bucket": "hotspot-project-41fbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873402932064:android:8aa04495c745efe406dc05",
+        "android_client_info": {
+          "package_name": "com.example.hotspot_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873402932064-qqpfnk1mfg222ee6f6gecjknidvf28tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotspot_project",
+            "certificate_hash": "0b43f0f4bd387b62c3670d9625b14cdb76aee744"
+          }
+        },
+        {
+          "client_id": "873402932064-600dvg6fh3ke8eksenodnpanov07ej90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAelrIPvZ4I_Npp7fXL6UY93kJP7S0IStg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873402932064-600dvg6fh3ke8eksenodnpanov07ej90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:hotspot_project/compnents/app_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:intl/intl.dart';
+
+import '../compnents/app_bar.dart';
 import '../compnents/data/DUMMMY_DATA.dart';
-import 'package:hotspot_project/compnents/buttons/buttons.dart';
+import '../compnents/buttons/buttons.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';

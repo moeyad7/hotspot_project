@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './app_router.dart';
 import './screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/post_details_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -32,7 +36,15 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, userSnapshot) {
+          if (userSnapshot.hasData) {
+            return HomePage();
+          }
+          return AuthScreen();
+        },
+      ),
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
         HomePage.routeName: (context) => HomePage(),

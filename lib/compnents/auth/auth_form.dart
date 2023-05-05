@@ -7,19 +7,58 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class AuthForm extends StatefulWidget {
+  final bool isLoading;
+  final void Function(
+    String email,
+    String password,
+    String userName,
+    String dateOfBirth,
+    bool isLogin,
+    BuildContext ctx,
+  ) submitFn;
+
+  AuthForm(this.submitFn, this.isLoading);
+
   @override
   State<AuthForm> createState() => _AuthFormState();
 }
 
 class _AuthFormState extends State<AuthForm> {
   TextEditingController dateOfBirth = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  String _userEmail = '';
+  String _userName = '';
+  String _userPassword = '';
+  String _userReEnterPassword = '';
+  String _userDateOfBirth = '';
+
   bool _isLogin = true;
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+
+      widget.submitFn(
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userName.trim(),
+        _userDateOfBirth,
+        _isLogin,
+        context,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -85,81 +124,63 @@ class _AuthFormState extends State<AuthForm> {
                       signIn: () {},
                     ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      validator: (value) {
+                    TexFormFieldCustom(
+                      label: 'Email',
+                      valid: (value) {
                         if (value!.isEmpty || !value.contains('@')) {
                           return 'Please enter a valid email address.';
                         }
                         return null;
                       },
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
+                      save: (value) {
+                        _userEmail = value;
+                      },
                     ),
                     SizedBox(height: 10),
                     if (!_isLogin)
-                      TextFormField(
-                        validator: (value) {
+                      TexFormFieldCustom(
+                        label: 'Username',
+                        valid: (value) {
                           if (value!.isEmpty || value.length < 3) {
                             return 'Please enter a username.';
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
+                        save: (value) {
+                          _userName = value;
+                        },
                       ),
                     SizedBox(height: 10),
-                    TextFormField(
-                      validator: (value) {
+                    TexFormFieldCustom(
+                      label: 'Password',
+                      valid: (value) {
                         if (value!.isEmpty || value.length < 7) {
                           return 'Password must be at least 7 characters long.';
                         }
                         return null;
                       },
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                      ),
-                      obscureText: true,
+                      save: (value) {
+                        _userPassword = value;
+                      },
+                      obscure: true,
                     ),
                     SizedBox(height: 10),
                     if (!_isLogin)
-                      TextFormField(
-                        validator: (value) {
+                      TexFormFieldCustom(
+                        label: 'Re-enter Password',
+                        valid: (value) {
                           if (value!.isEmpty || value.length < 7) {
                             return 'Password must be at least 7 characters long.';
                           }
-                          // if(value != ){
-                          //   return 'Password must be same as above.';
-                          // }
+                          if (_userReEnterPassword != _userPassword) {
+                            return 'Password must be same as above.';
+                          }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          labelText: 'Re Enter Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                        ),
-                        obscureText: true,
+                        save: (value) {
+                          _userReEnterPassword = value;
+                        },
+                        obscure: true,
                       ),
                     SizedBox(height: 10),
                     if (!_isLogin)
@@ -191,6 +212,9 @@ class _AuthFormState extends State<AuthForm> {
 
                           dateOfBirth.text = DateFormat.yMMMd().format(date);
                         },
+                        onSaved: (value) {
+                          _userDateOfBirth = value!;
+                        },
                       )
                   ],
                 ),
@@ -205,7 +229,9 @@ class _AuthFormState extends State<AuthForm> {
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _trySubmit();
+                },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFFF58A07),
                   shape: RoundedRectangleBorder(
@@ -230,6 +256,37 @@ class _AuthFormState extends State<AuthForm> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class TexFormFieldCustom extends StatelessWidget {
+  final Function? valid;
+  final String label;
+  final Function? save;
+  final bool obscure;
+  const TexFormFieldCustom({
+    required this.valid,
+    required this.label,
+    required this.save,
+    this.obscure = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      validator: valid as String? Function(String?)?,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        filled: true,
+        fillColor: Color(0xFFF58A07).withOpacity(0.3),
+      ),
+      keyboardType: TextInputType.emailAddress,
+      onSaved: save as void Function(String?)?,
+      obscureText: obscure,
     );
   }
 }
