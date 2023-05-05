@@ -5,7 +5,7 @@ AppBar my_appBar(BuildContext context) {
     title: Text(
       'H' + '🔥' + 'tspot',
       style: TextStyle(
-        color: ThemeData().colorScheme.surface,
+        foreground: Paint(),
         fontSize: 25,
       ),
     ),

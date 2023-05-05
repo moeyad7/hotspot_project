@@ -153,6 +153,12 @@ class _AuthFormState extends State<AuthForm> {
                     SizedBox(height: 10),
                     if (!_isLogin)
                       TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a date of birth.';
+                          }
+                          return null;
+                        },
                         controller: dateOfBirth,
                         decoration: InputDecoration(
                           labelText: "Date of birth",
@@ -192,7 +198,7 @@ class _AuthFormState extends State<AuthForm> {
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFFF58A07),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),

@@ -8,9 +8,9 @@ class NavBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: ThemeData().colorScheme.primary,
-      selectedItemColor: ThemeData().colorScheme.secondary,
-      unselectedItemColor: ThemeData().colorScheme.tertiary,
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onSecondary,
       currentIndex: selectedTab.index,
       onTap: (int index) {
         final selectedTab = NavigationItem.values[index];
