@@ -40,8 +40,8 @@ dependencies:
   custom_sliding_segmented_control: ^1.7.4
   flutter_signin_button: ^2.0.0
   cloud_firestore: ^4.5.3
-  firebase_core: ^2.10.0
-  firebase_auth: ^4.4.2
+  firebase_core: ^2.11.0
+  firebase_auth: ^4.5.0
   intl: ^0.17.0
   google_sign_in: ^6.1.0
   
