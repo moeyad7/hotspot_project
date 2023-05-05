@@ -36,13 +36,24 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder(
+      home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (ctx, userSnapshot) {
-          if (userSnapshot.hasData) {
-            return HomePage();
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
           }
-          return AuthScreen();
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.data == null) {
+              return AuthScreen();
+            } else {
+              return HomePage();
+            }
+          }
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         },
       ),
       routes: {

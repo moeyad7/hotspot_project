@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 
 import '../buttons/signInButtonCustom.dart';
 
@@ -65,6 +68,32 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+    signInWithGoogle() async {
+      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          "username": userCredential.user!.displayName,
+          "email": userCredential.user!.email,
+          "dateOfBirth": DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        });
+      }
+      // print(userCredential.user?.displayName);
+    }
+
     return Center(
       child: SingleChildScrollView(
         child: Form(
@@ -126,7 +155,9 @@ class _AuthFormState extends State<AuthForm> {
                   children: <Widget>[
                     SignInButtonCustom(
                       button: Buttons.Google,
-                      signIn: () {},
+                      signIn: () {
+                        signInWithGoogle();
+                      },
                     ),
                     SizedBox(height: 10),
                     SignInButtonCustom(
@@ -217,7 +248,8 @@ class _AuthFormState extends State<AuthForm> {
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now()) as DateTime;
 
-                          dateOfBirth.text = DateFormat.yMMMd().format(date);
+                          dateOfBirth.text =
+                              DateFormat('dd/MM/yyyy').format(date);
                         },
                         onSaved: (value) {
                           _userDateOfBirth = value!;
