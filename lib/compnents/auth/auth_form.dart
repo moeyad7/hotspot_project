@@ -9,6 +9,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 
 import '../buttons/signInButtonCustom.dart';
+import '../textfields/textFormFieldCustom.dart';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
@@ -160,11 +161,6 @@ class _AuthFormState extends State<AuthForm> {
                       },
                     ),
                     SizedBox(height: 10),
-                    SignInButtonCustom(
-                      button: Buttons.Facebook,
-                      signIn: () {},
-                    ),
-                    SizedBox(height: 10),
                     TexFormFieldCustom(
                       label: 'Email',
                       valid: (value) {
@@ -297,37 +293,6 @@ class _AuthFormState extends State<AuthForm> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class TexFormFieldCustom extends StatelessWidget {
-  final Function? valid;
-  final String label;
-  final Function? save;
-  final bool obscure;
-  const TexFormFieldCustom({
-    required this.valid,
-    required this.label,
-    required this.save,
-    this.obscure = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      validator: valid as String? Function(String?)?,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        filled: true,
-        fillColor: Color(0xFFF58A07).withOpacity(0.3),
-      ),
-      keyboardType: TextInputType.emailAddress,
-      onSaved: save as void Function(String?)?,
-      obscureText: obscure,
     );
   }
 }
