@@ -46,8 +46,25 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState!.save();
-
-      if (_userPassword.trim() == _userReEnterPassword.trim()) {
+      if (!_isLogin) {
+        if (_userPassword.trim() == _userReEnterPassword.trim()) {
+          widget.submitFn(
+            _userEmail.trim(),
+            _userPassword.trim(),
+            _userName.trim(),
+            _userDateOfBirth,
+            _isLogin,
+            context,
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Passwords do not match!'),
+              backgroundColor: Theme.of(context).errorColor,
+            ),
+          );
+        }
+      } else {
         widget.submitFn(
           _userEmail.trim(),
           _userPassword.trim(),
@@ -55,13 +72,6 @@ class _AuthFormState extends State<AuthForm> {
           _userDateOfBirth,
           _isLogin,
           context,
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Passwords do not match!'),
-            backgroundColor: Theme.of(context).errorColor,
-          ),
         );
       }
     }

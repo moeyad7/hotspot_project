@@ -16,19 +16,19 @@ class NavBarComponent extends StatelessWidget {
         final selectedTab = NavigationItem.values[index];
         switch (selectedTab) {
           case NavigationItem.home:
-            Navigator.pushNamed(context, '/HomePage');
+            Navigator.popAndPushNamed(context, '/HomePage');
             break;
           case NavigationItem.search:
-            Navigator.pushNamed(context, '/SearchPage');
+            Navigator.popAndPushNamed(context, '/SearchPage');
             break;
           case NavigationItem.add:
-            Navigator.pushNamed(context, '/AddPage');
+            Navigator.popAndPushNamed(context, '/AddPage');
             break;
           case NavigationItem.profile:
-            Navigator.pushNamed(context, '/ProfilePage');
+            Navigator.popAndPushNamed(context, '/ProfileScreen');
             break;
           case NavigationItem.trending:
-            Navigator.pushNamed(context, '/Trending');
+            Navigator.popAndPushNamed(context, '/Trending');
             break;
         }
       },

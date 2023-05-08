@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import './screens/profile_screen.dart';
 
 import './app_router.dart';
 import './screens/auth_screen.dart';
@@ -60,6 +63,7 @@ class MyApp extends StatelessWidget {
         AuthScreen.routeName: (context) => AuthScreen(),
         HomePage.routeName: (context) => HomePage(),
         PostDetail.routeName: (context) => PostDetail(),
+        ProfileScreen.routeName: (context)=> ProfileScreen(),
       },
     );
   }

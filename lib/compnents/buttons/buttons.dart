@@ -1,17 +1,21 @@
+// ignore_for_file: prefer_if_null_operators, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String name;
   final Color color;
-  final String type;
+  final String? type;
   final IconData? icon;
+  final Color? iconColor;
 
   const CustomButton({
     Key? key,
     required this.name,
     required this.color,
-    required this.type,
+    this.type,
     this.icon,
+    this.iconColor,
   }) : super(key: key);
 
   @override
@@ -19,7 +23,6 @@ class CustomButton extends StatelessWidget {
     switch (type) {
       case 'chips':
         return Chip(
-
           label: Row(
             children: [
               if (icon != null) Icon(icon),
@@ -43,7 +46,18 @@ class CustomButton extends StatelessWidget {
               shape: StadiumBorder(),
             ),
             child: Row(
-              children: [if (icon != null) Icon(icon), Text(name)],
+              children: [
+                if (icon != null)
+                  Icon(
+                    icon,
+                    color: iconColor != null ? iconColor : null,
+                  ),
+                SizedBox(width: 15),
+                Text(
+                  name,
+                  style: TextStyle(color: Colors.black),
+                )
+              ],
             ));
     }
   }
