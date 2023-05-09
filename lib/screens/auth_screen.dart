@@ -18,7 +18,6 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
-  final File _userImageFile = File('../../assets/images/empty_profile.jpg');
 
   void _submitAuthForm(
     String email,
@@ -45,14 +44,8 @@ class _AuthScreenState extends State<AuthScreen> {
           password: password,
         );
 
-        final ref = FirebaseStorage.instance
-            .ref()
-            .child('user_image')
-            .child(authResult.user!.uid + '.jpg');
-
-        await ref.putFile(_userImageFile).whenComplete(() => print('yay'));
-
-        final url = await ref.getDownloadURL();
+        final String url =
+            'https://firebasestorage.googleapis.com/v0/b/hotspot-project-41fbb.appspot.com/o/Defaults%2Fempty_profile.jpg?alt=media&token=afc8fb64-94c4-406f-bb50-03dcb86ffe83';
 
         await FirebaseFirestore.instance
             .collection('users')
