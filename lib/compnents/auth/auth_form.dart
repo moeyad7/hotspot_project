@@ -93,6 +93,9 @@ class _AuthFormState extends State<AuthForm> {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (userCredential.additionalUserInfo!.isNewUser) {
+        final String url =
+            'https://firebasestorage.googleapis.com/v0/b/hotspot-project-41fbb.appspot.com/o/Defaults%2Fempty_profile.jpg?alt=media&token=afc8fb64-94c4-406f-bb50-03dcb86ffe83';
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
@@ -100,6 +103,12 @@ class _AuthFormState extends State<AuthForm> {
           "username": userCredential.user!.displayName,
           "email": userCredential.user!.email,
           "dateOfBirth": DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          'image_url': url,
+          'ratings': [],
+          'comments': [],
+          'saved': [],
+          'visited': [],
+          'recent_searches': [],
         });
       }
       // print(userCredential.user?.displayName);

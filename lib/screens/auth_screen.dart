@@ -55,7 +55,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'email': email,
           'dateOfBirth': dateOfBirth,
           'image_url': url,
-          'hello': 'hello',
           'ratings': [],
           'comments': [],
           'saved': [],
