@@ -8,15 +8,17 @@ class CustomButton extends StatelessWidget {
   final String? type;
   final IconData? icon;
   final Color? iconColor;
+  final VoidCallback? pressFunction;
 
-  const CustomButton({
-    Key? key,
-    required this.name,
-    required this.color,
-    this.type,
-    this.icon,
-    this.iconColor,
-  }) : super(key: key);
+  const CustomButton(
+      {Key? key,
+      required this.name,
+      required this.color,
+      this.type,
+      this.icon,
+      this.iconColor,
+      this.pressFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +41,12 @@ class CustomButton extends StatelessWidget {
         );
       default:
         return ElevatedButton(
-            onPressed: () {},
+            onPressed: pressFunction == null? (){} : pressFunction,
             style: ElevatedButton.styleFrom(
               primary: color,
               onPrimary: Colors.white,
               shape: StadiumBorder(),
+  
             ),
             child: Row(
               children: [

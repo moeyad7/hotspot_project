@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
+import './visited_screen.dart';
+import './saved_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/ProfileScreen';
@@ -67,12 +69,19 @@ class ProfileScreen extends StatelessWidget {
                       color: Color(0xFFD9D9D9),
                       icon: Icons.bookmark,
                       iconColor: Color(0xFFF58A07),
+                      pressFunction: () {
+                        Navigator.of(context).pushNamed(SavedScreen.routeName);
+                      },
                     ),
                     CustomButton(
                       name: 'Visited • ' + '69',
                       color: Color(0xFFD9D9D9),
                       icon: Icons.check_circle,
                       iconColor: Color(0xFF2FC686),
+                      pressFunction: () {
+                        Navigator.of(context)
+                            .pushNamed(VisitedScreen.routeName);
+                      },
                     ),
                   ],
                 )
