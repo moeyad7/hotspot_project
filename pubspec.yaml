@@ -48,6 +48,8 @@ dependencies:
   google_sign_in: ^6.1.0
   firebase_storage: ^11.1.2
   image_picker: ^0.8.7+4
+  http: ^0.13.5
+  json_serializable: ^6.5.4
   
 
 dev_dependencies:

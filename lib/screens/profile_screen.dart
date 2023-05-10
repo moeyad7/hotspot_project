@@ -10,10 +10,44 @@ import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import './edit_profile_screen.dart';
 import '../compnents/buttons/buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const routeName = '/ProfileScreen';
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  void getData() async {
+    //get the authenticated user data from firebase
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+
+    //set the data to the text fields
+
+    setState(() {
+      _userName = userData['username'];
+      _userImage = userData['image_url'];
+      // _userRatings = json.decode(userData['ratings']) as List<dynamic>;
+    });
+  }
+
+  var _userName;
+  var _userImage;
+  // List<dynamic>? _userRatings;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +60,8 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
-                Image.asset(
-                  'assets/images/empty_profile.jpg',
+                Image.network(
+                  _userImage,
                   height: 150,
                   width: 150,
                 ),
@@ -101,7 +135,7 @@ class ProfileScreen extends StatelessWidget {
                         color: Color(0xFF2FC686),
                       ),
                       Text(
-                        'Marwan Tawfik',
+                        _userName,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
