@@ -54,12 +54,18 @@ class _CreatePostState extends State<CreatePost> {
             ),
             Container(
                 padding: EdgeInsets.all(30),
-
+                height:MediaQuery.of(context).size.width * 0.6 ,
               child: TextField(
+                // Single-line fields automatically scroll to the right when the text field is full  
+                maxLines: 10,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Description',
+                  
                 ),
+                style: TextStyle(
+                  fontSize: 18,
+                )
               ),
             ),
 
