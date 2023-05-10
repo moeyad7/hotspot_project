@@ -41,21 +41,21 @@ class CustomButton extends StatelessWidget {
         );
       default:
         return ElevatedButton(
-            onPressed: pressFunction == null? (){} : pressFunction,
+            onPressed: pressFunction == null ? () {} : pressFunction,
             style: ElevatedButton.styleFrom(
               primary: color,
               onPrimary: Colors.white,
               shape: StadiumBorder(),
-  
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (icon != null)
                   Icon(
                     icon,
                     color: iconColor != null ? iconColor : null,
                   ),
-                SizedBox(width: 15),
+                if (icon != null) SizedBox(width: 15),
                 Text(
                   name,
                   style: TextStyle(color: Colors.black),
