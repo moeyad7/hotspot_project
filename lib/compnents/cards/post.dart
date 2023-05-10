@@ -97,7 +97,7 @@ class PostCard extends StatelessWidget {
           children: [
             Container(
               height: 200,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
