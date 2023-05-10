@@ -142,7 +142,22 @@ class _CreatePostState extends State<CreatePost> {
               ),
             ),
 
-        ],),   
+            Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Post'),
+                      style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+                      ),  
+                    ),
+            ),
+
+        ],), 
+          
         ),
     
       bottomNavigationBar: NavBarComponent(
