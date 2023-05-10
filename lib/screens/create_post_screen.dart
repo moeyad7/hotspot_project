@@ -82,6 +82,11 @@ class _CreatePostState extends State<CreatePost> {
             ),
           ],
         ),
+<<<<<<< Updated upstream
+=======
+          bottomNavigationBar: NavBarComponent(
+        selectedTab: NavigationItem.add,
+>>>>>>> Stashed changes
       ),
       bottomNavigationBar: NavBarComponent(
         selectedTab: NavigationItem.add,
