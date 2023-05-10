@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hotspot_project/compnents/buttons/buttons.dart';
-import '../data/DUMMMY_DATA.dart';
+import '/data/DUMMMY_DATA.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard({super.key});
+  final TouristSite touristSites;
 
+  const PostCard({Key? key, required this.touristSites}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    String img = touristSites[0].imageUrl;
+    String img = touristSites.imageUrl;
     Rating(double rating) {
       return Row(children: [
         Icon(
@@ -52,7 +53,7 @@ class PostCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: NetworkImage(touristSites[0].imageUrl),
+                  image: NetworkImage(touristSites.imageUrl),
                   fit: BoxFit.fill,
                   alignment: Alignment.bottomCenter,
                 ),
@@ -81,14 +82,14 @@ class PostCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          touristSites[0].name,
+                          touristSites.name,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Rating(touristSites[0].rating),
+                        Rating(touristSites.rating),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -98,7 +99,7 @@ class PostCard extends StatelessWidget {
                       spacing: 8,
                       children: [
                         Row(
-                          children: touristSites[0].category.map((tag) {
+                          children: touristSites.category.map((tag) {
                             return Container(
                                 margin: EdgeInsets.only(
                                     left: 8,
@@ -124,7 +125,7 @@ class PostCard extends StatelessWidget {
                       margin:
                           EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 8),
                       child: Text(
-                        touristSites[0].description,
+                        touristSites.description,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
