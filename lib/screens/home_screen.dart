@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../app_router.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/cards/post.dart';
+import '../data/DUMMMY_DATA.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,9 +18,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: my_appBar(context),
-      body: Center(
-        child: PostCard(),
-        
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+//make it create a listview builder for the posts from the data in the dummy_data
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: touristSites.length,
+              itemBuilder: (context, index) {
+                return PostCard(
+                  touristSites: touristSites[index],
+                );
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: NavBarComponent(
         selectedTab: NavigationItem.home,
