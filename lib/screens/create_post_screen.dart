@@ -68,6 +68,18 @@ class _CreatePostState extends State<CreatePost> {
                 )
               ),
             ),
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 10),
+              child: Text('Categories',
+               style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold, 
+                    color: ThemeData().colorScheme.primary, 
+                  )            
+            
+              ),
+            ),
 
         ],),   
         ),
