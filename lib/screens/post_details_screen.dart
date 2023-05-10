@@ -71,7 +71,8 @@ class _PostDetailState extends State<PostDetail> {
               placeholder: 'assets/images/loading.gif',
               image: touristSites[0].imageUrl,
               height: 250,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
+
               fit: BoxFit.cover,
             ),
           ),

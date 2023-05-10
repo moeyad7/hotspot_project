@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -39,6 +43,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var _userName = TextEditingController();
   var _dateOfBirth = TextEditingController();
   var _userImage = TextEditingController();
+
+  var _password = '';
 
   @override
   void initState() {
@@ -126,27 +132,81 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     },
                   ),
                   SizedBox(height: 10),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.edit),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xFF228CE5)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                        label: const Text('Change Password'),
+                        onPressed: () {
+                          //change the password
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Change Password'),
+                              content: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: TextField(
+                                      autofocus: true,
+                                      decoration: const InputDecoration(
+                                          labelText: 'New Password',
+                                          hintText: 'Enter your new password'),
+                                      onChanged: (value) {
+                                        _password = value;
+                                      },
+                                      obscureText: true,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10),
                       Container(
                         height: 40,
-                        width: 150,
+                        width: 174,
+                        child: CustomButton(
+                          name: "Edit Image",
+                          color: Color(0xFFD6D6D6),
+                          pressFunction: () {},
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 40,
+                        width: 174,
                         child: CustomButton(
                           name: "Save Changes",
                           color: Color(0xFF2FC686),
                           pressFunction: () {},
                         ),
                       ),
-                      Container(
-                        height: 40,
-                        width: 122,
-                        child: CustomButton(
-                          name: "Edit Image",
-                          color: Color(0xFFD6D6D6),
-                          pressFunction: () {},
-                        ),
-                      )
                     ],
                   )
                 ],
