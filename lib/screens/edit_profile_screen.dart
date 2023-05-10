@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -14,35 +16,65 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  TextEditingController dateOfBirth = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-  
-  String _userEmail = '';
-  String _userName = '';
-  String _userPassword = '';
-  String _userReEnterPassword = '';
-  String _userDateOfBirth = '';
+
+  void getData() async {
+    //get the authenticated user data from firebase
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+
+    //set the data to the text fields
+    setState(() {
+      _userEmail.text = userData['email'];
+      _userName.text = userData['username'];
+      _dateOfBirth.text = userData['dateOfBirth'];
+      _userImage.text = userData['image_url'];
+    });
+  }
+
+  var _userEmail = TextEditingController();
+  var _userName = TextEditingController();
+  var _dateOfBirth = TextEditingController();
+  var _userImage = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Form(
+              key: _formKey,
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/Logo.png',
+                  Image.network(
+                    _userImage.text,
                     height: 150,
                     width: 150,
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: _userEmail,
+                    validator: (value) {
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Please enter a valid email address.';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       labelText: "Email",
                       border: OutlineInputBorder(
@@ -54,17 +86,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
+                    controller: _userName,
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 3) {
+                        return 'Please enter a username.';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       labelText: "Username",
                       border: OutlineInputBorder(
@@ -76,19 +104,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    controller: dateOfBirth,
+                    controller: _dateOfBirth,
                     decoration: InputDecoration(
                       labelText: "Date of birth",
                       border: OutlineInputBorder(
@@ -106,10 +122,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           firstDate: DateTime(1900),
                           lastDate: DateTime.now()) as DateTime;
 
-                      dateOfBirth.text = DateFormat('dd/MM/yyyy').format(date);
-                    },
-                    onSaved: (value) {
-                      _userDateOfBirth = value!;
+                      _dateOfBirth.text = DateFormat('dd/MM/yyyy').format(date);
                     },
                   ),
                   SizedBox(height: 10),
@@ -118,9 +131,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       Container(
                         height: 40,
-                        width: 122,
+                        width: 150,
                         child: CustomButton(
-                          name: "Configure",
+                          name: "Save Changes",
                           color: Color(0xFF2FC686),
                           pressFunction: () {},
                         ),

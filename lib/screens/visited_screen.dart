@@ -11,7 +11,7 @@ class VisitedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
