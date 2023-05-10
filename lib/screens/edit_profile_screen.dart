@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -163,6 +167,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       onChanged: (value) {
                                         _password = value;
                                       },
+                                      obscureText: true,
                                     ),
                                   )
                                 ],
@@ -179,14 +184,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ],
                             ),
-                          ).then((returnVal) {
-                            if (returnVal == 'OK') {
-                              //change the password
-                              setState(
-                                () {},
-                              );
-                            }
-                          });
+                          );
                         },
                       ),
                       SizedBox(height: 10),
