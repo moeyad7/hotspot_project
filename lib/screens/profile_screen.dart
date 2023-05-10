@@ -111,7 +111,8 @@ class ProfileScreen extends StatelessWidget {
                   name: 'Edit Profile',
                   color: Color(0xFF2FC686),
                   pressFunction: () {
-                    Navigator.of(context).pushNamed(EditProfileScreen.routeName);
+                    Navigator.of(context)
+                        .pushNamed(EditProfileScreen.routeName);
                   },
                 ),
               ),
