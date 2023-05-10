@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
-import '../compnents/nav_bar.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
 
-import '../compnents/app_bar.dart';
 import '/data/DUMMMY_DATA.dart';
+import '../compnents/app_bar.dart';
+import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
 
 class CreatePost extends StatefulWidget {
@@ -20,7 +20,7 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: my_appBar(context),
+        appBar: MyAppBar(context),
         body: SingleChildScrollView(child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -41,11 +41,14 @@ class _CreatePostState extends State<CreatePost> {
               width: MediaQuery.of(context).size.width * 0.8,
               padding: EdgeInsets.all(15),
               child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Title',
-                  
-                ),
+                  decoration: InputDecoration(
+                          labelText: "Title",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xFFF58A07).withOpacity(0.3),
+                        ),
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,  
@@ -59,10 +62,13 @@ class _CreatePostState extends State<CreatePost> {
                 // Single-line fields automatically scroll to the right when the text field is full  
                 maxLines: 10,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Description',
-                  
-                ),
+                          labelText: "Description",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xFFF58A07).withOpacity(0.3),
+                        ),
                 style: TextStyle(
                   fontSize: 18,
                 )

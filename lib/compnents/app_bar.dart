@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-AppBar my_appBar(BuildContext context) {
+AppBar MyAppBar(BuildContext context) {
   return AppBar(
     title: Text(
       'H🔥tspot',

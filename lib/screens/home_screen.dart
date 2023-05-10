@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [

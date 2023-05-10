@@ -46,7 +46,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       body: Column(
         children: <Widget>[
 //           ClipRRect(
