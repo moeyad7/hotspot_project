@@ -8,6 +8,7 @@ import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
 import './visited_screen.dart';
 import './saved_screen.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/ProfileScreen';
@@ -107,7 +108,12 @@ class ProfileScreen extends StatelessWidget {
                 width: 130,
                 height: 40,
                 child: CustomButton(
-                    name: 'Edit Profile', color: Color(0xFF2FC686)),
+                  name: 'Edit Profile',
+                  color: Color(0xFF2FC686),
+                  pressFunction: () {
+                    Navigator.of(context).pushNamed(EditProfileScreen.routeName);
+                  },
+                ),
               ),
               Column(
                 children: [

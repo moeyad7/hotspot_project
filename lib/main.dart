@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import './screens/edit_profile_screen.dart';
 import './screens/saved_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
@@ -65,9 +66,10 @@ class MyApp extends StatelessWidget {
         AuthScreen.routeName: (context) => AuthScreen(),
         HomePage.routeName: (context) => HomePage(),
         PostDetail.routeName: (context) => PostDetail(),
-        ProfileScreen.routeName: (context)=> ProfileScreen(),
-        SavedScreen.routeName: (context)=> SavedScreen(),
-        VisitedScreen.routeName: (context)=> VisitedScreen(),
+        ProfileScreen.routeName: (context) => ProfileScreen(),
+        SavedScreen.routeName: (context) => SavedScreen(),
+        VisitedScreen.routeName: (context) => VisitedScreen(),
+        EditProfileScreen.routeName: (context) => EditProfileScreen(),
       },
     );
   }
