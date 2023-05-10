@@ -42,7 +42,7 @@ final List<TouristSite> touristSites = [
           'The Sphinx is a mythical creature with the head of a human and the body of a lion. It is located near the Pyramids of Giza and is one of the most famous landmarks in Egypt.',
       category: ['Historical Landmark', 'Monument'],
       imageUrl:
-          'https://cdn.pixabay.com/photo/2016/09/08/21/09/pyramids-1654439_960_720.jpg',
+          'https://bpb-us-e1.wpmucdn.com/sites.psu.edu/dist/1/9283/files/2014/03/Great_Sphinx_of_Giza_-_20080716a.jpg',
       added: DateTime.now()),
   TouristSite(
       name: 'The Egyptian Museum',
@@ -60,7 +60,7 @@ final List<TouristSite> touristSites = [
           'The Karnak Temple Complex is located in Luxor and is one of the largest temple complexes in the world. It was built over a period of 2000 years by many different pharaohs.',
       category: ['Historical Landmark', 'Temple'],
       imageUrl:
-          'https://cdn.pixabay.com/photo/2017/01/28/02/24/museum-2019132_960_720.jpg',
+          'http://3.bp.blogspot.com/-Gwh8OoxnByQ/UW0MrPlslpI/AAAAAAAAOR4/2qlS5YFU2bQ/s1600/Karnak+Temple+(3).jpg',
       added: DateTime.now()),
   TouristSite(
       name: 'Abu Simbel Temples',
