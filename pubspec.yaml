@@ -75,7 +75,8 @@ flutter:
    - assets/animations/loading.gif
    - assets/images/empty_profile.jpg
   #   - images/a_dot_ham.jpeg
-
+flutter_icons:
+  image_path: "icons/icon.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
