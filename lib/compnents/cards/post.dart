@@ -9,29 +9,86 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String img = touristSites.imageUrl;
-    Rating(double rating) {
-      return Row(children: [
-        Icon(
-          Icons.star,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.star_half,
-          color: Colors.white,
-        ),
-      ]);
+    Row Rating(double rating) {
+      const star = Icon(
+        Icons.star,
+        color: Colors.white,
+      );
+      const nostar=Icon( 
+        Icons.star_outline_outlined,
+        color: Colors.white
+        );
+      if (rating >= 5) {
+        return Row(
+          children: [
+            star,
+            star,
+            star,
+            star,
+            star,
+          ],
+        );
+      }
+       if (rating >= 4) {
+        return Row(
+          children: [
+            star,
+            star,
+            star,
+            star,
+            nostar,
+          ],
+        );
+      }
+      if(rating >= 3){
+        return Row(
+          children: [
+            star,
+            star,
+            star,
+            nostar,
+            nostar,
+          ],
+        );
+
+      }
+      if(rating >= 2){
+        return Row(
+          children: [
+            star,
+            star,
+            nostar,
+            nostar,
+            nostar,
+          ],
+        );
+
+      }
+      if(rating >= 1){
+        return Row(
+          children: [
+            star,
+            nostar,
+            nostar,
+            nostar,
+            nostar,
+          ],
+        );
+
+      }
+      else{
+        return Row(
+          children: [
+            nostar,
+            nostar,
+            nostar,
+            nostar,
+            nostar,
+          ],
+        );
+
+      }
+
     }
 
     return InkWell(
