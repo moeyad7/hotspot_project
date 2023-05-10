@@ -22,7 +22,7 @@ class NavBarComponent extends StatelessWidget {
             Navigator.popAndPushNamed(context, '/SearchPage');
             break;
           case NavigationItem.add:
-            Navigator.popAndPushNamed(context, '/AddPage');
+            Navigator.popAndPushNamed(context, '/PostCreate');
             break;
           case NavigationItem.profile:
             Navigator.popAndPushNamed(context, '/ProfileScreen');

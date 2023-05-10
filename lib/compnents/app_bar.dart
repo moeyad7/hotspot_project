@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 AppBar my_appBar(BuildContext context) {
   return AppBar(
     title: Text(
-      'H' + '🔥' + 'tspot',
+      'H🔥tspot',
       textAlign: TextAlign.left,
       style: TextStyle(
         foreground: Paint(),

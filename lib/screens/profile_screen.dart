@@ -3,12 +3,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
+import './saved_screen.dart';
+import './visited_screen.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
+import './edit_profile_screen.dart';
 import '../compnents/buttons/buttons.dart';
-import './visited_screen.dart';
-import './saved_screen.dart';
-import 'edit_profile_screen.dart';
 
 
 class ProfileScreen extends StatelessWidget {

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import 'package:intl/intl.dart';
 import '../compnents/buttons/buttons.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -17,15 +17,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController dateOfBirth = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
+  
   String _userEmail = '';
-
   String _userName = '';
-
   String _userPassword = '';
-
   String _userReEnterPassword = '';
-
   String _userDateOfBirth = '';
 
   @override
