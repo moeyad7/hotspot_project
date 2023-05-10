@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
-import '../compnents/nav_bar.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
 
-import '../compnents/app_bar.dart';
 import '/data/DUMMMY_DATA.dart';
+import '../compnents/app_bar.dart';
+import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
 
 class CreatePost extends StatefulWidget {
@@ -20,7 +20,7 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: my_appBar(context),
+        appBar: MyAppBar(context),
         body: SingleChildScrollView(child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
