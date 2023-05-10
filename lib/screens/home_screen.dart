@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../app_router.dart';
+
+import '../data/DUMMMY_DATA.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/cards/post.dart';
-import '../data/DUMMMY_DATA.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

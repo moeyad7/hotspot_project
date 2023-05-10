@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 AppBar my_appBar(BuildContext context) {
   return AppBar(
     title: Text(
-      'H' + '🔥' + 'tspot',
+      'H🔥tspot',
       textAlign: TextAlign.left,
       style: TextStyle(
         foreground: Paint(),
@@ -38,7 +38,7 @@ AppBar my_appBar(BuildContext context) {
         ],
         onChanged: (itemIdentifier) async {
           if (itemIdentifier == 'signout') {
-            FirebaseAuth.instance.signOut();
+            await FirebaseAuth.instance.signOut();
 
             await GoogleSignIn().signOut(); 
           }
