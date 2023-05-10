@@ -190,7 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(height: 10),
                       Container(
                         height: 40,
-                        width: 122,
+                        width: 174,
                         child: CustomButton(
                           name: "Edit Image",
                           color: Color(0xFFD6D6D6),
@@ -200,7 +200,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(height: 10),
                       Container(
                         height: 40,
-                        width: 150,
+                        width: 174,
                         child: CustomButton(
                           name: "Save Changes",
                           color: Color(0xFF2FC686),
