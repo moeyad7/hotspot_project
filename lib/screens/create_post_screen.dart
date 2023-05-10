@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-
 import '/data/DUMMMY_DATA.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -25,7 +24,7 @@ class _CreatePostState extends State<CreatePost> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.only(top: 30, left: 10, right: 10),
               child: Text('New Post',
                style: TextStyle(
                     fontSize: 30,
@@ -38,8 +37,7 @@ class _CreatePostState extends State<CreatePost> {
           
             Container(
           
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.only(left:30,right:30,bottom: 20,top:15),
               child: TextField(
                   decoration: InputDecoration(
                           labelText: "Title",
@@ -56,8 +54,8 @@ class _CreatePostState extends State<CreatePost> {
               ),
             ),
             Container(
-                padding: EdgeInsets.all(30),
-                height:MediaQuery.of(context).size.width * 0.6 ,
+                padding: EdgeInsets.only(left:30, right:30),
+                height:MediaQuery.of(context).size.width * 0.4 ,
               child: TextField(
                 // Single-line fields automatically scroll to the right when the text field is full  
                 maxLines: 10,
@@ -76,14 +74,74 @@ class _CreatePostState extends State<CreatePost> {
             ),
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 30, top: 10),
               child: Text('Categories',
                style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold, 
                     color: ThemeData().colorScheme.primary, 
                   )            
             
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 30, top: 10,right: 30),
+
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  children:[Wrap(
+                  spacing: 3.0,
+                 // gap between adjacent chips
+                  children: [
+                    CustomButton(
+                      name: 'Nature',
+                      color:  ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'History',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'Entertainment',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'Food',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    )]),
+                    Wrap(
+                      spacing:3,
+                      children:<Widget>[
+                    CustomButton(
+                      name: 'Adventure',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'Religion ',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'Shopping',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                    CustomButton(
+                      name: 'Culture',
+                      color: ThemeData().colorScheme.tertiary,
+                      type: 'chips',
+                    ),
+                  ],
+                ),
+                ]
+                ),
+              
               ),
             ),
 
