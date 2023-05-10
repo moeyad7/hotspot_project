@@ -8,6 +8,8 @@ import './screens/edit_profile_screen.dart';
 import './screens/saved_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
+import './screens/create_post_screen.dart';
+import './app_router.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
 import 'screens/post_details_screen.dart';
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
         SavedScreen.routeName: (context) => SavedScreen(),
         VisitedScreen.routeName: (context) => VisitedScreen(),
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
+        CreatePost.routeName: (context) => CreatePost(),
       },
     );
   }

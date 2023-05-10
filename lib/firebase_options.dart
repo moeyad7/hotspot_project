@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxgGUUIR9oaipfLoEwCs5HynLe9QuZ9VY',
-    appId: '1:873402932064:web:3a0ad01e5321f71f06dc05',
-    messagingSenderId: '873402932064',
-    projectId: 'hotspot-project-41fbb',
-    authDomain: 'hotspot-project-41fbb.firebaseapp.com',
-    storageBucket: 'hotspot-project-41fbb.appspot.com',
-    measurementId: 'G-2WNQ69MERJ',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAelrIPvZ4I_Npp7fXL6UY93kJP7S0IStg',
     appId: '1:873402932064:android:8aa04495c745efe406dc05',
@@ -62,17 +58,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAbqGR2tmL2BcKdFBQX7GkpvSVVsfSpEr8',
-    appId: '1:873402932064:ios:534198455de6ebdf06dc05',
-    messagingSenderId: '873402932064',
-    projectId: 'hotspot-project-41fbb',
-    storageBucket: 'hotspot-project-41fbb.appspot.com',
-    androidClientId: '873402932064-qqpfnk1mfg222ee6f6gecjknidvf28tn.apps.googleusercontent.com',
-    iosClientId: '873402932064-in11ka5h2rti6tma0s247lmuv53sfrsh.apps.googleusercontent.com',
-    iosBundleId: 'com.example.hotspotProject',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAbqGR2tmL2BcKdFBQX7GkpvSVVsfSpEr8',
     appId: '1:873402932064:ios:534198455de6ebdf06dc05',
     messagingSenderId: '873402932064',
