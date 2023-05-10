@@ -1,6 +1,6 @@
 import '/data/DUMMMY_DATA.dart';
+import '../buttons/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:hotspot_project/compnents/buttons/buttons.dart';
 
 class PostCard extends StatelessWidget {
   final TouristSite touristSites;
@@ -14,10 +14,7 @@ class PostCard extends StatelessWidget {
         Icons.star,
         color: Colors.white,
       );
-      const nostar=Icon( 
-        Icons.star_outline_outlined,
-        color: Colors.white
-        );
+      const nostar = Icon(Icons.star_outline_outlined, color: Colors.white);
       if (rating >= 5) {
         return Row(
           children: [
@@ -29,7 +26,7 @@ class PostCard extends StatelessWidget {
           ],
         );
       }
-       if (rating >= 4) {
+      if (rating >= 4) {
         return Row(
           children: [
             star,
@@ -40,7 +37,7 @@ class PostCard extends StatelessWidget {
           ],
         );
       }
-      if(rating >= 3){
+      if (rating >= 3) {
         return Row(
           children: [
             star,
@@ -50,9 +47,8 @@ class PostCard extends StatelessWidget {
             nostar,
           ],
         );
-
       }
-      if(rating >= 2){
+      if (rating >= 2) {
         return Row(
           children: [
             star,
@@ -62,9 +58,8 @@ class PostCard extends StatelessWidget {
             nostar,
           ],
         );
-
       }
-      if(rating >= 1){
+      if (rating >= 1) {
         return Row(
           children: [
             star,
@@ -74,9 +69,7 @@ class PostCard extends StatelessWidget {
             nostar,
           ],
         );
-
-      }
-      else{
+      } else {
         return Row(
           children: [
             nostar,
@@ -86,9 +79,7 @@ class PostCard extends StatelessWidget {
             nostar,
           ],
         );
-
       }
-
     }
 
     return InkWell(
