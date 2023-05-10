@@ -1,6 +1,6 @@
 import '/data/DUMMMY_DATA.dart';
+import '../buttons/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:hotspot_project/compnents/buttons/buttons.dart';
 
 class PostCard extends StatelessWidget {
   final TouristSite touristSites;
