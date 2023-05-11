@@ -49,9 +49,13 @@ class _EditFormState extends State<EditForm> {
   var _userEmail = TextEditingController();
   var _userName = TextEditingController();
   var _dateOfBirth = TextEditingController();
-  var _userImage = null;
+  var _userImage;
 
   var _password = '';
+
+  void _pickedImage(File image) {
+    _userImage = image;
+  }
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -59,6 +63,14 @@ class _EditFormState extends State<EditForm> {
 
     if (isValid) {
       _formKey.currentState!.save();
+      widget.submitFn(
+        _userEmail.text.trim(),
+        _password.trim(),
+        _userName.text.trim(),
+        _dateOfBirth.text.trim(),
+        _userImage,
+        context,
+      );
     }
   }
 
@@ -84,6 +96,7 @@ class _EditFormState extends State<EditForm> {
                     : UserImagePicker(
                         userImage: _userImage,
                         type: ImageSource.camera,
+                        imagePickFn: _pickedImage,
                       ),
                 SizedBox(height: 10),
                 TextFormField(

@@ -60,11 +60,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
-                Image.network(
-                  _userImage,
-                  height: 150,
-                  width: 150,
-                ),
+                CircleAvatar(
+                    radius: 75,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: NetworkImage(
+                      _userImage,
+                    )),
                 SizedBox(width: 50),
                 Column(
                   children: [

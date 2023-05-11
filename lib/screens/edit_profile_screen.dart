@@ -31,24 +31,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     File image,
     BuildContext ctx,
   ) async {
-        final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
     try {
       setState(() {
         _isLoading = true;
       });
-      
-        
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .set({
-          'username': userName,
-          'email': email,
-          'dateOfBirth': dateOfBirth,
-          // 'image_url': url,
-        });
-      
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(user!.uid + '.jpg');
+
+      await ref.putFile(image).whenComplete(() => print('image uploaded'));
+
+      final url = await ref.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({
+        'username': userName,
+        'email': email,
+        'dateOfBirth': dateOfBirth,
+        'image_url': url,
+      });
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
