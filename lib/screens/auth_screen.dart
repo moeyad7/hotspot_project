@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../compnents/auth/auth_form.dart';
+import '../compnents/forms/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/AuthScreen';
