@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +10,18 @@ import '../buttons/buttons.dart';
 import '../pickers/user_image_picker.dart';
 
 class EditForm extends StatefulWidget {
+  final bool isLoading;
+  final void Function(
+    String email,
+    String password,
+    String userName,
+    String dateOfBirth,
+    File image,
+    BuildContext ctx,
+  ) submitFn;
+
+  EditForm(this.submitFn, this.isLoading);
+
   @override
   State<EditForm> createState() => _EditFormState();
 }
@@ -38,16 +52,17 @@ class _EditFormState extends State<EditForm> {
 
   var _password = '';
 
-  void test() {
-    print(_userEmail);
-    print(_userName);
-    print(_dateOfBirth);
-    print(_password);
+  void _trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+    }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     getData();
 
     super.initState();
@@ -190,7 +205,7 @@ class _EditFormState extends State<EditForm> {
                       child: CustomButton(
                         name: "Save Changes",
                         color: Color(0xFF2FC686),
-                        pressFunction: test,
+                        pressFunction: _trySubmit,
                       ),
                     ),
                   ],

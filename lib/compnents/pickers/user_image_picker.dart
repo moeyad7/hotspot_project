@@ -8,7 +8,7 @@ import '../buttons/buttons.dart';
 class UserImagePicker extends StatefulWidget {
   final userImage;
 
-  UserImagePicker({required this.userImage});
+  UserImagePicker({this.userImage});
 
   @override
   State<UserImagePicker> createState() => _UserImagePickerState();
