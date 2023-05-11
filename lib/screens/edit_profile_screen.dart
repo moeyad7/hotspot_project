@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
+import '../compnents/pickers/user_image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/EditProfileScreen';
@@ -67,12 +67,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  Image.network(
-                    _userImage.text,
-                    height: 150,
-                    width: 150,
-                  ),
-                  SizedBox(height: 20),
+                  UserImagePicker(),
+                  SizedBox(height: 10),
                   TextFormField(
                     controller: _userEmail,
                     validator: (value) {
@@ -186,16 +182,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           );
                         },
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 40,
-                        width: 174,
-                        child: CustomButton(
-                          name: "Edit Image",
-                          color: Color(0xFFD6D6D6),
-                          pressFunction: () {},
-                        ),
                       ),
                       SizedBox(height: 10),
                       Container(
