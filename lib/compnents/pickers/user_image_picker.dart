@@ -7,8 +7,9 @@ import '../buttons/buttons.dart';
 
 class UserImagePicker extends StatefulWidget {
   final userImage;
+  final type;
 
-  UserImagePicker({this.userImage});
+  UserImagePicker({this.userImage, required this.type});
 
   @override
   State<UserImagePicker> createState() => _UserImagePickerState();
@@ -17,10 +18,10 @@ class UserImagePicker extends StatefulWidget {
 class _UserImagePickerState extends State<UserImagePicker> {
   var _pickedImage;
 
-
   void _pickImage() async {
     final picker = ImagePicker();
-    final pickedImageFile = await picker.pickImage(source: ImageSource.camera);
+
+    final pickedImageFile = await picker.pickImage(source: widget.type);
     setState(() {
       _pickedImage = File(pickedImageFile!.path);
     });
