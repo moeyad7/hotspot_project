@@ -9,11 +9,25 @@ import './screens/saved_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
 import './screens/create_post_screen.dart';
-import './app_router.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
 import 'screens/post_details_screen.dart';
 
+final customSwatch = MaterialColor(
+  0xFFF58A07,
+  <int, Color>{
+    50: Color(0xFFFFFCE5),
+    100: Color(0xFFFFF2B2),
+    200: Color(0xFFFFE680),
+    300: Color(0xFFFFD24D),
+    400: Color(0xFFFFC22D),
+    500: Color(0xFFF58A07),
+    600: Color(0xFFD16D05),
+    700: Color(0xFFAF4F03),
+    800: Color(0xFF8D3102),
+    900: Color(0xFF6B1300),
+  },
+);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,6 +41,20 @@ class MyApp extends StatelessWidget {
       // onGenerateRoute: AppRouter().generateRoute,
       title: 'Hotspot',
       theme: ThemeData(
+        useMaterial3: true,
+        textTheme: TextTheme(
+          displayLarge: TextStyle(color: Colors.black),
+          displayMedium: TextStyle(color: Colors.black),
+          displaySmall: TextStyle(color: Colors.black),
+          headlineMedium: TextStyle(color: Colors.black),
+          headlineSmall: TextStyle(color: Colors.black),
+          titleLarge: TextStyle(color: Colors.black),
+          titleMedium: TextStyle(color: Colors.black),
+          titleSmall: TextStyle(color: Colors.black),
+          bodyLarge: TextStyle(color: Colors.black),
+          bodyMedium: TextStyle(color: Colors.black),
+        ),
+        primarySwatch: customSwatch,
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: Color(0xFFF58A07),
           onPrimary: Color(0xFFF58A07),

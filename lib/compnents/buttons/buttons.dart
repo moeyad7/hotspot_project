@@ -25,10 +25,18 @@ class CustomButton extends StatelessWidget {
     switch (type) {
       case 'chips':
         return Chip(
+          shadowColor: color,
+          shape: StadiumBorder(),
           label: Row(
             children: [
               if (icon != null) Icon(icon),
-              Text(name),
+              Text(name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    //make the chip more rounded
+
+                    backgroundColor: color,
+                  )),
             ],
           ),
           backgroundColor: color,
@@ -43,8 +51,8 @@ class CustomButton extends StatelessWidget {
         return ElevatedButton(
             onPressed: pressFunction == null ? () {} : pressFunction,
             style: ElevatedButton.styleFrom(
-              primary: color,
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white,
+              backgroundColor: color,
               shape: StadiumBorder(),
             ),
             child: Row(

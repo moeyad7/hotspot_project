@@ -1,7 +1,4 @@
-import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-import '/data/DUMMMY_DATA.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';

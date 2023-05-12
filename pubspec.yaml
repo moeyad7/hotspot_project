@@ -44,12 +44,13 @@ dependencies:
   cloud_firestore: ^4.5.3
   firebase_core: ^2.11.0
   firebase_auth: ^4.5.0
-  intl: ^0.17.0
+  intl: ^0.18.1
   google_sign_in: ^6.1.0
   firebase_storage: ^11.1.2
   image_picker: ^0.8.7+4
   http: ^0.13.5
   json_serializable: ^6.5.4
+  cached_network_image: ^3.1.0
   
 
 dev_dependencies:

@@ -89,7 +89,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Theme.of(ctx).errorColor,
+          backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
       );
       print(err);
@@ -107,7 +107,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Theme.of(ctx).errorColor,
+          backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
       );
       print(err);
