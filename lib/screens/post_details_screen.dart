@@ -1,46 +1,105 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:flutter/material.dart';
 
-import '/data/DUMMMY_DATA.dart';
+import '../../data/DUMMMY_DATA.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';
 
-  const PostDetail({super.key});
+  const PostDetail({Key? key}) : super(key: key);
 
   @override
-  State<PostDetail> createState() => _PostDetailState();
+  _PostDetailState createState() => _PostDetailState();
 }
 
 class _PostDetailState extends State<PostDetail> {
-  Rating(double rating) {
-    return Row(children: [
-      Icon(
-        Icons.star,
-        color: Colors.black,
+  bool _isVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _isVisible = true;
+      });
+    });
+  }
+
+Widget _buildImage(String imageUrl) {
+  return Image.network(
+    imageUrl,
+    fit: BoxFit.fitWidth,
+    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+      return Center(
+        child: Text(
+          'Could not load image',
+          style: TextStyle(color: Colors.grey),
+        ),
+      );
+    },
+    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+      if (loadingProgress == null) {
+        return child;
+      }
+      return Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          color: Colors.grey[300],
+        ),
+      );
+    },
+  );
+}
+
+  Widget _buildTitle() {
+    return AnimatedOpacity(
+      opacity: _isVisible ? 1.0 : 0.0,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+      child: Text(
+        touristSites[0].name,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
       ),
-      Icon(
-        Icons.star,
-        color: Colors.black,
+    );
+  }
+
+  Widget _buildRating() {
+    return AnimatedOpacity(
+      opacity: _isVisible ? 1.0 : 0.0,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+      child: Row(
+        children: [
+          Icon(
+            Icons.star,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.star,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.star,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.star,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.star_half,
+            color: Colors.black,
+          ),
+        ],
       ),
-      Icon(
-        Icons.star,
-        color: Colors.black,
-      ),
-      Icon(
-        Icons.star,
-        color: Colors.black,
-      ),
-      Icon(
-        Icons.star_half,
-        color: Colors.black,
-      ),
-    ]);
+    );
   }
 
   @override
@@ -49,62 +108,38 @@ class _PostDetailState extends State<PostDetail> {
       appBar: MyAppBar(context),
       body: Column(
         children: <Widget>[
-//           ClipRRect(
-//    borderRadius: BorderRadius.only(
-//      bottomLeft: Radius.circular(15),
-//      bottomRight: Radius.circular(15),
-//    ),
-//    child: Shimmer.fromColors(
-//      baseColor: ThemeData().colorScheme.primary.withAlpha(50),
-//      highlightColor: ThemeData().colorScheme.surface.withAlpha(50),
-//      child: Image.network(
-//        touristSites[0].imageUrl
-//      ),
-//    ),
-// ),
           ClipRRect(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15),
             ),
-            child: FadeInImage.assetNetwork(
-              placeholder: 'assets/images/loading.gif',
-              image: touristSites[0].imageUrl,
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-
-              fit: BoxFit.cover,
-            ),
+            child: _isVisible
+                ? _buildImage(touristSites[0].imageUrl)
+                : Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      color: Colors.grey[300],
+                    ),
+                  ),
           ),
+          SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               DateFormat.yMd().format(touristSites[0].added),
             ),
           ),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                touristSites[0].name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
+              Expanded(child: _buildTitle()),
+              SizedBox(width: 16),
               Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        touristSites[0].rating.toString() + "/5",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ],
-                  ),
+                  _buildRating(),
+                  SizedBox(height: 8),
                   Row(
                     children: [
                       CustomButton(
@@ -113,6 +148,7 @@ class _PostDetailState extends State<PostDetail> {
                         type: 'icons',
                         icon: Icons.check_circle_outline_rounded,
                       ),
+                      SizedBox(width: 8),
                       CustomButton(
                         name: 'save',
                         color: Colors.black,
@@ -125,6 +161,7 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ],
           ),
+          SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -134,29 +171,23 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
           ),
+          SizedBox(height: 8),
           Row(
             children: touristSites[0].category.map((tag) {
               return Container(
-                margin: EdgeInsets.only(left: 8, right: 8),
+                margin: EdgeInsets.only(
+                  left: 4,
+                  right: 4,
+                ),
                 child: CustomButton(
                   name: tag,
-                  color: ThemeData().colorScheme.tertiary,
+                  color: ThemeData().colorScheme.primary,
                   type: 'chips',
                 ),
               );
             }).toList(),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Rating",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-          Rating(touristSites[0].rating),
-          SizedBox(height: 8),
+          SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -167,34 +198,42 @@ class _PostDetailState extends State<PostDetail> {
             ),
           ),
           SizedBox(height: 8),
-          Text(
-            touristSites[0].description,
-            style: TextStyle(
-              fontSize: 16,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16, left: 16),
+              child: _isVisible
+                  ? SingleChildScrollView(
+                      child: Text(
+                        touristSites[0].description,
+                        style: TextStyle(
+                          fontSize: 16,
+                          height: 1.5,
+                        ),
+                      ),
+                    )
+                  : Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        color: Colors.grey[300],
+                      ),
+                    ),
             ),
           ),
-          CustomButton(
-              name: "Comments/Rating",
-              color: Color(0xFF2FC686),
-              type: "ElevatedButton",
-              icon: Icons.comment_rounded)
+          SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
+                name: 'Comments',
+                color: ThemeData().colorScheme.tertiary,
+                type: 'elevated',
+                icon: Icons.comment,
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
-
-
-// ClipRRect(
-//    borderRadius: BorderRadius.only(
-//      bottomLeft: Radius.circular(15),
-//      bottomRight: Radius.circular(15),
-//    ),
-//    child: Shimmer.fromColors(
-//      baseColor: ThemeData().colorScheme.primary.withAlpha(50),
-//      highlightColor: ThemeData().colorScheme.surface.withAlpha(50),
-//      child: Image.network(
-//        touristSites[0].imageUrl
-//      ),
-//    ),
-// ),

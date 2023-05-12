@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-//make it create a listview builder for the posts from the data in the dummy_data
             ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,

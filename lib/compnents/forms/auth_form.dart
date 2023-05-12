@@ -60,7 +60,7 @@ class _AuthFormState extends State<AuthForm> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Passwords do not match!'),
-              backgroundColor: Theme.of(context).errorColor,
+              backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
         }
@@ -289,7 +289,7 @@ class _AuthFormState extends State<AuthForm> {
                     _trySubmit();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFF58A07),
+                    backgroundColor: Color(0xFFF58A07),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
