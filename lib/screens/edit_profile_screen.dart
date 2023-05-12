@@ -100,9 +100,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
-      if (err.toString() != null) {
-        message = err.toString().split(']')[1].trim();
-      }
+      message = err.toString().split(']')[1].trim();
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(

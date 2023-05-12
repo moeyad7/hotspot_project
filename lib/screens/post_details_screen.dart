@@ -31,6 +31,7 @@ class _PostDetailState extends State<PostDetail> {
 Widget _buildImage(String imageUrl) {
   return Image.network(
     imageUrl,
+    width: double.infinity,
     fit: BoxFit.fitWidth,
     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
       return Center(
