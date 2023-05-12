@@ -5,21 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../buttons/buttons.dart';
 import '../pickers/user_image_picker.dart';
 
 class EditForm extends StatefulWidget {
-  final bool isLoading;
   final void Function(
     String email,
     String password,
     String userName,
     String dateOfBirth,
-    File image,
     BuildContext ctx,
+    {File? newImage}
   ) submitFn;
+  final bool isLoading;
 
   EditForm(this.submitFn, this.isLoading);
 
@@ -42,16 +41,17 @@ class _EditFormState extends State<EditForm> {
       _userEmail.text = userData['email'];
       _userName.text = userData['username'];
       _dateOfBirth.text = userData['dateOfBirth'];
-      _userImage = userData['image_url'];
+      _profileImage = userData['image_url'];
     });
   }
 
   var _userEmail = TextEditingController();
   var _userName = TextEditingController();
   var _dateOfBirth = TextEditingController();
-  var _userImage;
-
+  var _profileImage;
   var _password = '';
+
+  var _userImage;
 
   void _pickedImage(File image) {
     _userImage = image;
@@ -68,8 +68,8 @@ class _EditFormState extends State<EditForm> {
         _password.trim(),
         _userName.text.trim(),
         _dateOfBirth.text.trim(),
-        _userImage,
         context,
+        newImage:_userImage == null ? null : _userImage,
       );
     }
   }
@@ -91,10 +91,10 @@ class _EditFormState extends State<EditForm> {
             key: _formKey,
             child: Column(
               children: [
-                _userImage == null
+                _profileImage == null
                     ? CircularProgressIndicator()
                     : UserImagePicker(
-                        userImage: _userImage,
+                        profileImage: _profileImage,
                         type: ImageSource.camera,
                         imagePickFn: _pickedImage,
                       ),

@@ -28,8 +28,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     String password,
     String userName,
     String dateOfBirth,
-    File image,
     BuildContext ctx,
+    {File? newImage}
   ) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
@@ -37,24 +37,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         _isLoading = true;
       });
 
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('user_image')
-          .child(user!.uid + '.jpg');
+      if (newImage != null) {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(user!.uid + '.jpg');
 
-      await ref.putFile(image).whenComplete(() => print('image uploaded'));
+        await ref.putFile(newImage).whenComplete(() => print('image uploaded'));
 
-      final url = await ref.getDownloadURL();
+        final url = await ref.getDownloadURL();
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user!.uid)
-          .update({
-        'username': userName,
-        'email': email,
-        'dateOfBirth': dateOfBirth,
-        'image_url': url,
-      });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
+          'username': userName,
+          'email': email,
+          'dateOfBirth': dateOfBirth,
+          'image_url': url,
+        });
+
+        Navigator.of(context).pop();
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
+          'username': userName,
+          'email': email,
+          'dateOfBirth': dateOfBirth,
+        });
+
+        Navigator.of(context).pop();
+      }
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
