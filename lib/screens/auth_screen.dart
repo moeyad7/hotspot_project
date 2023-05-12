@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,24 +52,10 @@ class _AuthScreenState extends State<AuthScreen> {
           'email': email,
           'dateOfBirth': dateOfBirth,
           'image_url': url,
-          'ratings': {
-            "location": {
-              "rating": 0,
-              "locationId": 0,
-            }
-          },
-          'comments': {
-            "location": {
-              "comment": "",
-              "locationId": 0,
-            }
-          },
-          'saved': {
-            "locationId": 0,
-          },
-          'visited': {
-            "locationId": 0,
-          },
+          'ratings': [],
+          'comments': [],
+          'saved': [],
+          'visited': [],
           'recent_searches': [],
         });
       }
@@ -86,9 +71,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message,
-                    style: TextStyle(color: Colors.black),
-        ),
+          content: Text(
+            message,
+            style: TextStyle(color: Colors.black),
+          ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
       );
@@ -100,12 +86,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message,
-          style: TextStyle(color: Colors.black),
+          content: Text(
+            message,
+            style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
-        
       );
       print(err);
       setState(() {

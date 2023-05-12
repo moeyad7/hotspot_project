@@ -25,7 +25,9 @@ class VisitedScreen extends StatelessWidget {
                     Icons.check_circle,
                     color: Color(0xFF2FC686),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     "Visited • " + "69",
                     style: TextStyle(
@@ -34,7 +36,10 @@ class VisitedScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(thickness: 1),
+            Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
           ],
         ),
       ),

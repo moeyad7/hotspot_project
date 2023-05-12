@@ -28,32 +28,34 @@ class _PostDetailState extends State<PostDetail> {
     });
   }
 
-Widget _buildImage(String imageUrl) {
-  return Image.network(
-    imageUrl,
-    fit: BoxFit.fitWidth,
-    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-      return Center(
-        child: Text(
-          'Could not load image',
-          style: TextStyle(color: Colors.grey),
-        ),
-      );
-    },
-    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-      if (loadingProgress == null) {
-        return child;
-      }
-      return Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: Container(
-          color: Colors.grey[300],
-        ),
-      );
-    },
-  );
-}
+  Widget _buildImage(String imageUrl) {
+    return Image.network(
+      imageUrl,
+      fit: BoxFit.fitWidth,
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Center(
+          child: Text(
+            'Could not load image',
+            style: TextStyle(color: Colors.grey),
+          ),
+        );
+      },
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            color: Colors.grey[300],
+          ),
+        );
+      },
+    );
+  }
 
   Widget _buildTitle() {
     return AnimatedOpacity(
@@ -142,18 +144,26 @@ Widget _buildImage(String imageUrl) {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      CustomButton(
-                        name: 'seen',
-                        color: Colors.black,
-                        type: 'icons',
-                        icon: Icons.check_circle_outline_rounded,
+                      Container(
+                        width: 20,
+                        height: 20,
+                        child: CustomButton(
+                          name: 'seen',
+                          color: Colors.black,
+                          type: 'icons',
+                          icon: Icons.check_circle_outline_rounded,
+                        ),
                       ),
-                      SizedBox(width: 8),
-                      CustomButton(
-                        name: 'save',
-                        color: Colors.black,
-                        type: 'icons',
-                        icon: Icons.bookmark_border_rounded,
+                      SizedBox(width: 35),
+                      Container(
+                        width: 20,
+                        height: 20,
+                        child: CustomButton(
+                          name: 'save',
+                          color: Colors.black,
+                          type: 'icons',
+                          icon: Icons.bookmark_border_rounded,
+                        ),
                       ),
                     ],
                   ),

@@ -22,8 +22,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void getData() async {
     final user = FirebaseAuth.instance.currentUser;
-    final userData =
-        await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
 
     setState(() {
       _userName = userData['username'];
@@ -52,10 +54,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: 75,
-                          backgroundColor: Colors.grey,
-                          backgroundImage: NetworkImage(_userImage),
+                        Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 75,
+                              backgroundColor: Colors.grey,
+                              backgroundImage: NetworkImage(_userImage),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              _userName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(width: 20),
                         Expanded(
@@ -63,17 +77,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
                                       Text(
                                         '69',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         'Ratings',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -81,11 +98,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       Text(
                                         '169',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         'Comments',
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -98,7 +117,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 icon: Icons.bookmark,
                                 iconColor: Color(0xFFF58A07),
                                 pressFunction: () {
-                                  Navigator.of(context).pushNamed(SavedScreen.routeName);
+                                  Navigator.of(context)
+                                      .pushNamed(SavedScreen.routeName);
                                 },
                               ),
                               SizedBox(height: 10),
@@ -108,26 +128,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 icon: Icons.check_circle,
                                 iconColor: Color(0xFF2FC686),
                                 pressFunction: () {
-                                  Navigator.of(context).pushNamed(VisitedScreen.routeName);
+                                  Navigator.of(context)
+                                      .pushNamed(VisitedScreen.routeName);
                                 },
                               ),
                             ],
                           ),
                         ),
-                        
-              
                       ],
-                      
                     ),
                     CustomButton(
-                          name: 'Edit Profile',
-                          color: Color(0xFFD9D9D9),
-                          icon: Icons.edit,
-                          iconColor: Color(0xFF2FC686),
-                          pressFunction: () {
-                            Navigator.of(context).pushNamed(EditProfileScreen.routeName);
-                          },
-                        ),
+                      name: 'Edit Profile',
+                      color: Color(0xFFD9D9D9),
+                      icon: Icons.edit,
+                      iconColor: Colors.black,
+                      pressFunction: () {
+                        Navigator.of(context)
+                            .pushNamed(EditProfileScreen.routeName);
+                      },
+                    ),
                     Divider(
                       color: Colors.black,
                     ),

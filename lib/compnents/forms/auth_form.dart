@@ -110,9 +110,7 @@ class _AuthFormState extends State<AuthForm> {
           'visited': [],
           'recent_searches': [],
         });
-        
       }
-      // print(userCredential.user?.displayName);
     }
 
     return Center(
