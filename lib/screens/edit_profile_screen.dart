@@ -1,10 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import 'package:intl/intl.dart';
-import '../compnents/buttons/buttons.dart';
+import '../compnents/forms/edit_form.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/EditProfileScreen';
@@ -14,133 +20,84 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  TextEditingController dateOfBirth = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  var _isLoading = false;
 
-  final _formKey = GlobalKey<FormState>();
-  String _userEmail = '';
-  String _userName = '';
-  String _userPassword = '';
-  String _userReEnterPassword = '';
-  String _userDateOfBirth = '';
+  void _submitEditForm(
+    String email,
+    String password,
+    String userName,
+    String dateOfBirth,
+    File image,
+    BuildContext ctx,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(user!.uid + '.jpg');
+
+      await ref.putFile(image).whenComplete(() => print('image uploaded'));
+
+      final url = await ref.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({
+        'username': userName,
+        'email': email,
+        'dateOfBirth': dateOfBirth,
+        'image_url': url,
+      });
+    } on PlatformException catch (err) {
+      var message = 'An error occurred, please check your credentials!';
+
+      if (err.message != null) {
+        message = err.message as String;
+      }
+
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+      print(err);
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (err) {
+      var message = 'An error occurred, please check your credentials!';
+
+      // if (err.message != null) {
+      //   message = err.message;
+      // }
+
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+      print(err);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/Logo.png',
-                    height: 150,
-                    width: 150,
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Username",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white)),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    controller: dateOfBirth,
-                    decoration: InputDecoration(
-                      labelText: "Date of birth",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFD6D6D6),
-                    ),
-                    onTap: () async {
-                      DateTime date = DateTime(1900);
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now()) as DateTime;
-
-                      dateOfBirth.text = DateFormat('dd/MM/yyyy').format(date);
-                    },
-                    onSaved: (value) {
-                      _userDateOfBirth = value!;
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 122,
-                        child: CustomButton(
-                          name: "Configure",
-                          color: Color(0xFF2FC686),
-                          pressFunction: () {},
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        width: 122,
-                        child: CustomButton(
-                          name: "Edit Image",
-                          color: Color(0xFFD6D6D6),
-                          pressFunction: () {},
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      body: EditForm(_submitEditForm, _isLoading),
     );
   }
 }

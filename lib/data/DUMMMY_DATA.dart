@@ -69,7 +69,7 @@ final List<TouristSite> touristSites = [
           'The Abu Simbel Temples are two massive rock temples located in Nubia, southern Egypt. They were built during the reign of Pharaoh Ramesses II in the 13th century BC.',
       category: ['Historical Landmark', 'Temple'],
       imageUrl:
-          'https://cdn.pixabay.com/photo/2016/09/08/21/09/pyramids-1654439_960_720.jpg',
+          'https://th.bing.com/th/id/R.4bf6e801846af53d5088c7af0d2d9b96?rik=1nXEY38t6W8IUg&riu=http%3a%2f%2ffamouswonders.com%2fwp-content%2fuploads%2f2009%2f04%2fabu-simbel.jpg&ehk=mWpevgWXHChk%2f9uaI1XVg9gw2lRU8TtlI4E5EDDRv2I%3d&risl=&pid=ImgRaw&r=0',
       added: DateTime.now()),
   TouristSite(
       name: "Valley of the Kings",

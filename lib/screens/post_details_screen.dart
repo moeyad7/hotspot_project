@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
 
-import '../compnents/app_bar.dart';
 import '/data/DUMMMY_DATA.dart';
+import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
 
 class PostDetail extends StatefulWidget {
@@ -46,7 +46,7 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: my_appBar(context),
+      appBar: MyAppBar(context),
       body: Column(
         children: <Widget>[
 //           ClipRRect(
@@ -71,7 +71,8 @@ class _PostDetailState extends State<PostDetail> {
               placeholder: 'assets/images/loading.gif',
               image: touristSites[0].imageUrl,
               height: 250,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
+
               fit: BoxFit.cover,
             ),
           ),
