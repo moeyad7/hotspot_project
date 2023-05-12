@@ -17,15 +17,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController dateOfBirth = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
   String _userEmail = '';
-
   String _userName = '';
-
   String _userPassword = '';
-
   String _userReEnterPassword = '';
-
   String _userDateOfBirth = '';
 
   @override
