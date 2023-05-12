@@ -3,21 +3,40 @@ import 'package:flutter/material.dart';
 class ChangePasswordForm extends StatefulWidget {
   String oldPassword;
   String newPassword;
+  final void Function(
+    String oldPassword,
+    String newPassword,
+  ) getPassword;
 
-  ChangePasswordForm(this.oldPassword, this.newPassword);
+  ChangePasswordForm(this.oldPassword, this.newPassword, this.getPassword);
 
   @override
   State<ChangePasswordForm> createState() => _ChangePasswordFormState();
 }
 
 class _ChangePasswordFormState extends State<ChangePasswordForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  void _checkValidity() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      widget.getPassword(widget.oldPassword, widget.newPassword);
+      Navigator.pop(context, 'OK');
+    } else {
+      print('Invalid');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Change Password'),
       content: Container(
-        height: 118,
+        height: 170,
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -31,8 +50,8 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
                 decoration: const InputDecoration(
                     labelText: 'Old Password',
                     hintText: 'Enter your old password'),
-                onChanged: (value) {
-                  widget.oldPassword = value;
+                onChanged: (newValue) {
+                  widget.oldPassword = newValue;
                 },
                 obscureText: true,
               ),
@@ -47,8 +66,8 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
                 decoration: const InputDecoration(
                     labelText: 'New Password',
                     hintText: 'Enter your new password'),
-                onChanged: (value) {
-                  widget.newPassword = value;
+                onChanged: (newValue) {
+                  widget.newPassword = newValue;
                 },
                 obscureText: true,
               ),
@@ -62,7 +81,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () => Navigator.pop(context, 'OK'),
+          onPressed: _checkValidity,
           child: const Text('OK'),
         ),
       ],

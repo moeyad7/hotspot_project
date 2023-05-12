@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../screens/auth_screen.dart';
+
 AppBar MyAppBar(BuildContext context) {
   return AppBar(
     title: Text(
@@ -41,7 +43,7 @@ AppBar MyAppBar(BuildContext context) {
             await FirebaseAuth.instance.signOut();
 
             await GoogleSignIn().signOut();
-            Navigator.of(context).pushReplacementNamed('/AuthScreen');
+            Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
           }
         },
       )

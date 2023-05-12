@@ -24,8 +24,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var _isLoading = false;
 
   void _submitEditForm(
-      String email, String userName, String dateOfBirth, BuildContext ctx,
-      {String? oldPassword, String? newPassword, File? newImage}) async {
+    String email,
+    String userName,
+    String dateOfBirth,
+    BuildContext ctx, {
+    String? oldPassword,
+    String? newPassword,
+    File? newImage,
+  }) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
       setState(() {
@@ -47,24 +53,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             .doc(user.uid)
             .update({
           'username': userName,
-          'email': email,
           'dateOfBirth': dateOfBirth,
           'image_url': url,
         });
-
-        Navigator.of(context).pop();
       } else {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(user!.uid)
             .update({
           'username': userName,
-          'email': email,
           'dateOfBirth': dateOfBirth,
         });
-
-        Navigator.of(context).pop();
       }
+
+      if (oldPassword != null && newPassword != null) {
+        // check if old password is correct
+        AuthCredential credential = EmailAuthProvider.credential(
+            email: user.email!, password: oldPassword);
+
+        final trueUser = await user.reauthenticateWithCredential(credential);
+
+        // if the user is authenticated, update the password
+        if (trueUser.user != null) {
+          await user.updatePassword(newPassword);
+        }
+      }
+      Navigator.of(context).pop();
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
@@ -79,15 +93,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       );
       print(err);
+
       setState(() {
         _isLoading = false;
       });
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
-      // if (err.message != null) {
-      //   message = err.message;
-      // }
+      if (err.toString() != null) {
+        message = err.toString().split(']')[1].trim();
+      }
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(

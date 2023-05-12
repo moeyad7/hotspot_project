@@ -81,9 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
-      // if (err.message != null) {
-      //   message = err.message;
-      // }
+      message = err.toString().split(']')[1].trim();
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
