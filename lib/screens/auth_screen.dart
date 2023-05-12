@@ -54,10 +54,24 @@ class _AuthScreenState extends State<AuthScreen> {
           'email': email,
           'dateOfBirth': dateOfBirth,
           'image_url': url,
-          'ratings': [],
-          'comments': [],
-          'saved': [],
-          'visited': [],
+          'ratings': {
+            "location": {
+              "rating": 0,
+              "locationId": 0,
+            }
+          },
+          'comments': {
+            "location": {
+              "comment": "",
+              "locationId": 0,
+            }
+          },
+          'saved': {
+            "locationId": 0,
+          },
+          'visited': {
+            "locationId": 0,
+          },
           'recent_searches': [],
         });
       }
@@ -78,9 +92,6 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
       print(err);
-      setState(() {
-        _isLoading = false;
-      });
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
