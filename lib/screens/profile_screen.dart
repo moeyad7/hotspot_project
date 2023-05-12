@@ -114,8 +114,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                         ),
+                        
+              
                       ],
+                      
                     ),
+                    CustomButton(
+                          name: 'Edit Profile',
+                          color: Color(0xFFD9D9D9),
+                          icon: Icons.edit,
+                          iconColor: Color(0xFF2FC686),
+                          pressFunction: () {
+                            Navigator.of(context).pushNamed(EditProfileScreen.routeName);
+                          },
+                        ),
                     Divider(
                       color: Colors.black,
                     ),
