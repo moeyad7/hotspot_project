@@ -1,16 +1,12 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_interpolation_to_compose_strings, sized_box_for_whitespace
-
-
 import 'package:flutter/material.dart';
-
-import './saved_screen.dart';
-import './visited_screen.dart';
-import '../compnents/app_bar.dart';
-import '../compnents/nav_bar.dart';
-import './edit_profile_screen.dart';
-import '../compnents/buttons/buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import './saved_screen.dart';
+import './visited_screen.dart';
+import './edit_profile_screen.dart';
+import '../compnents/app_bar.dart';
+import '../compnents/nav_bar.dart';
+import '../compnents/buttons/buttons.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/ProfileScreen';
@@ -21,35 +17,25 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = true;
+  var _userName;
+  var _userImage;
 
   void getData() async {
-    //get the authenticated user data from firebase
     final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
-
-    //set the data to the text fields
+    final userData =
+        await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
 
     setState(() {
       _userName = userData['username'];
       _userImage = userData['image_url'];
-      // _userRatings = json.decode(userData['ratings']) as List<dynamic>;
-
       isLoading = false;
     });
   }
 
-  var _userName;
-  var _userImage;
-  // List<dynamic>? _userRatings;
-
   @override
   void initState() {
-    // TODO: implement initState
-    getData();
     super.initState();
+    getData();
   }
 
   @override
@@ -64,123 +50,92 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(children: [
-                      CircleAvatar(
+                    Row(
+                      children: [
+                        CircleAvatar(
                           radius: 75,
                           backgroundColor: Colors.grey,
-                          backgroundImage: NetworkImage(
-                            _userImage,
-                          )),
-                      SizedBox(width: 50),
-                      Column(
-                        children: [
-                          Column(
+                          backgroundImage: NetworkImage(_userImage),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
                                       Text(
                                         '69',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         'Ratings',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(width: 20),
                                   Column(
                                     children: [
                                       Text(
                                         '169',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         'Comments',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 10),
+                              CustomButton(
+                                name: 'Saved • ' + '69',
+                                color: Color(0xFFD9D9D9),
+                                icon: Icons.bookmark,
+                                iconColor: Color(0xFFF58A07),
+                                pressFunction: () {
+                                  Navigator.of(context).pushNamed(SavedScreen.routeName);
+                                },
+                              ),
+                              SizedBox(height: 10),
+                              CustomButton(
+                                name: 'Visited • ' + '69',
+                                color: Color(0xFFD9D9D9),
+                                icon: Icons.check_circle,
+                                iconColor: Color(0xFF2FC686),
+                                pressFunction: () {
+                                  Navigator.of(context).pushNamed(VisitedScreen.routeName);
+                                },
+                              ),
                             ],
                           ),
-                          CustomButton(
-                            name: 'Saved • ' + '69',
-                            color: Color(0xFFD9D9D9),
-                            icon: Icons.bookmark,
-                            iconColor: Color(0xFFF58A07),
-                            pressFunction: () {
-                              Navigator.of(context)
-                                  .pushNamed(SavedScreen.routeName);
-                            },
-                          ),
-                          CustomButton(
-                            name: 'Visited • ' + '69',
-                            color: Color(0xFFD9D9D9),
-                            icon: Icons.check_circle,
-                            iconColor: Color(0xFF2FC686),
-                            pressFunction: () {
-                              Navigator.of(context)
-                                  .pushNamed(VisitedScreen.routeName);
-                            },
-                          ),
-                        ],
-                      )
-                    ]),
-                    SizedBox(
-                      height: 7,
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.black,
                     ),
                     Center(
-                        widthFactor: 1.5,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.verified,
-                              color: Color(0xFF2FC686),
-                            ),
-                            Text(
-                              _userName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )),
-                    Container(
-                      width: 130,
-                      height: 40,
-                      child: CustomButton(
-                        name: 'Edit Profile',
-                        color: Color(0xFF2FC686),
-                        pressFunction: () {
-                          Navigator.of(context)
-                              .pushNamed(EditProfileScreen.routeName);
-                        },
+                      child: Text(
+                        'Your Posts',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                    Column(
-                      children: [
-                        Column(
-                          children: [
-                            Divider(),
-                            Text('Your Posts'),
-                            Divider(),
-                          ],
-                        )
-                      ],
-                    )
+                    Divider(
+                      color: Colors.black,
+                    ),
                   ],
                 ),
               ),
             ),
-      bottomNavigationBar: NavBarComponent(
-        selectedTab: NavigationItem.profile,
-      ),
+      bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
     );
   }
 }

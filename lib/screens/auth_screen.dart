@@ -72,7 +72,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Text(message,
+                    style: TextStyle(color: Colors.black),
+        ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
       );
@@ -87,9 +89,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Text(message,
+          style: TextStyle(color: Colors.black),
+          ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
+        
       );
       print(err);
       setState(() {
