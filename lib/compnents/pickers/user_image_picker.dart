@@ -46,6 +46,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
               ? NetworkImage(widget.profileImage)
               : FileImage(_pickedImage) as ImageProvider,
         ),
+        SizedBox(height: 10),
         Container(
           height: 40,
           width: 174,
