@@ -8,16 +8,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../buttons/buttons.dart';
 import '../pickers/user_image_picker.dart';
+import '../forms/change_password_form.dart';
 
 class EditForm extends StatefulWidget {
   final void Function(
     String email,
-    String password,
     String userName,
     String dateOfBirth,
-    BuildContext ctx,
-    {File? newImage}
-  ) submitFn;
+    BuildContext ctx, {
+    File? newImage,
+    String? oldPassword,
+    String? newPassword,
+  }) submitFn;
   final bool isLoading;
 
   EditForm(this.submitFn, this.isLoading);
@@ -28,6 +30,22 @@ class EditForm extends StatefulWidget {
 
 class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
+
+  var _userEmail = TextEditingController();
+  var _userName = TextEditingController();
+  var _dateOfBirth = TextEditingController();
+  var _profileImage;
+  var _oldPassword = '';
+  var _newPassword = '';
+
+  var _userImage;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   void getData() async {
     //get the authenticated user data from firebase
     final user = FirebaseAuth.instance.currentUser;
@@ -45,14 +63,6 @@ class _EditFormState extends State<EditForm> {
     });
   }
 
-  var _userEmail = TextEditingController();
-  var _userName = TextEditingController();
-  var _dateOfBirth = TextEditingController();
-  var _profileImage;
-  var _password = '';
-
-  var _userImage;
-
   void _pickedImage(File image) {
     _userImage = image;
   }
@@ -65,20 +75,14 @@ class _EditFormState extends State<EditForm> {
       _formKey.currentState!.save();
       widget.submitFn(
         _userEmail.text.trim(),
-        _password.trim(),
         _userName.text.trim(),
         _dateOfBirth.text.trim(),
         context,
-        newImage:_userImage == null ? null : _userImage,
+        newImage: _userImage,
+        oldPassword: _oldPassword.trim() == '' ? null : _oldPassword.trim(),
+        newPassword: _newPassword.trim() == '' ? null : _newPassword.trim(),
       );
     }
-  }
-
-  @override
-  void initState() {
-    getData();
-
-    super.initState();
   }
 
   @override
@@ -180,36 +184,8 @@ class _EditFormState extends State<EditForm> {
                         //change the password
                         showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Change Password'),
-                            content: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: TextField(
-                                    autofocus: true,
-                                    decoration: const InputDecoration(
-                                        labelText: 'New Password',
-                                        hintText: 'Enter your new password'),
-                                    onChanged: (value) {
-                                      _password = value;
-                                    },
-                                    obscureText: true,
-                                  ),
-                                )
-                              ],
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, 'OK'),
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          ),
+                          builder: (BuildContext context) =>
+                              ChangePasswordForm(_oldPassword, _newPassword),
                         );
                       },
                     ),

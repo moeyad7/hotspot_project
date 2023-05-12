@@ -24,13 +24,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var _isLoading = false;
 
   void _submitEditForm(
-    String email,
-    String password,
-    String userName,
-    String dateOfBirth,
-    BuildContext ctx,
-    {File? newImage}
-  ) async {
+      String email, String userName, String dateOfBirth, BuildContext ctx,
+      {String? oldPassword, String? newPassword, File? newImage}) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
       setState(() {

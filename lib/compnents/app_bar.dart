@@ -40,7 +40,8 @@ AppBar MyAppBar(BuildContext context) {
           if (itemIdentifier == 'signout') {
             await FirebaseAuth.instance.signOut();
 
-            await GoogleSignIn().signOut(); 
+            await GoogleSignIn().signOut();
+            Navigator.of(context).pushReplacementNamed('/AuthScreen');
           }
         },
       )
