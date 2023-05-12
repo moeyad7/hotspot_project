@@ -75,10 +75,6 @@ class _EditFormState extends State<EditForm> {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
-    print('edit form file');
-    print(_oldPassword);
-    print(_newPassword);
-
     if (isValid) {
       _formKey.currentState!.save();
       widget.submitFn(
