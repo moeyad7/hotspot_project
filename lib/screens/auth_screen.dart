@@ -61,6 +61,9 @@ class _AuthScreenState extends State<AuthScreen> {
           'recent_searches': [],
         });
       }
+      setState(() {
+        _isLoading = false;
+      });
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
