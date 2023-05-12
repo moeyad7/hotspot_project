@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(user!.uid)
+            .doc(user.uid)
             .update({
           'username': userName,
           'email': email,
