@@ -20,7 +20,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
   void _submitEditForm(
@@ -100,7 +99,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
+      
       message = err.toString().split(']')[1].trim();
+      
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(

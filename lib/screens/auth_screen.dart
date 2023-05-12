@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,16 +71,14 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message,
-                    style: TextStyle(color: Colors.black),
-        ),
+          content: Text(
+            message,
+            style: TextStyle(color: Colors.black),
+          ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
       );
       print(err);
-      setState(() {
-        _isLoading = false;
-      });
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
@@ -89,12 +86,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
-          content: Text(message,
-          style: TextStyle(color: Colors.black),
+          content: Text(
+            message,
+            style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Theme.of(ctx).colorScheme.error,
         ),
-        
       );
       print(err);
       setState(() {

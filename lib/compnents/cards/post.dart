@@ -13,7 +13,7 @@ class PostCard extends StatelessWidget {
     Row Rating(double rating) {
       const star = Icon(
         Icons.star,
-        color: Colors.white,
+        color: Colors.black,
       );
       const nostar = Icon(Icons.star_outline_outlined, color: Colors.white);
       if (rating >= 5) {
@@ -119,20 +119,20 @@ class PostCard extends StatelessWidget {
                         ),
                         Rating(touristSites.rating),
                         Row(
-                    children: touristSites.category.map((tag) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          left: 4,
-                          right: 4,
+                          children: touristSites.category.map((tag) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                left: 4,
+                                right: 4,
+                              ),
+                              child: CustomButton(
+                                name: tag,
+                                color: ThemeData().colorScheme.primary,
+                                type: 'chips',
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        child: CustomButton(
-                          name: tag,
-                          color: ThemeData().colorScheme.primary,
-                          type: 'chips',
-                        ),
-                      );
-                    }).toList(),
-                  ),
                       ],
                     ),
                   ),
@@ -144,8 +144,6 @@ class PostCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
-                  
                   SizedBox(height: 8),
                   Text(
                     touristSites.description,
@@ -197,7 +195,8 @@ class PostCard extends StatelessWidget {
     return Image.network(
       imageUrl,
       fit: BoxFit.cover,
-      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
         return Center(
           child: Text(
             'Could not load image',
@@ -205,7 +204,8 @@ class PostCard extends StatelessWidget {
           ),
         );
       },
-      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {
           return child;
         }

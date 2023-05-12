@@ -36,7 +36,10 @@ class SavedScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(thickness: 1),
+            Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
           ],
         ),
       ),

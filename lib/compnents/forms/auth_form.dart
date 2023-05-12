@@ -111,7 +111,6 @@ class _AuthFormState extends State<AuthForm> {
           'recent_searches': [],
         });
       }
-      // print(userCredential.user?.displayName);
     }
 
     return Center(
