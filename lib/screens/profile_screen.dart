@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
+
 import './saved_screen.dart';
 import './visited_screen.dart';
-import './edit_profile_screen.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../compnents/buttons/buttons.dart';
+import './edit_profile_screen.dart';
 import '../../screens/auth_screen.dart';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import '../../main.dart';
+import '../compnents/buttons/buttons.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/ProfileScreen';
@@ -28,7 +26,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+      });
+    } else {
+      getData();
     }
   }
 
@@ -50,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     isLoggedIn();
-    getData();
   }
 
   @override

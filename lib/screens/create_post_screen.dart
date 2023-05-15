@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../compnents/app_bar.dart';
-import '../compnents/buttons/buttons.dart';
 import '../compnents/nav_bar.dart';
+import '../screens/auth_screen.dart';
+import '../compnents/buttons/buttons.dart';
 
 class CreatePost extends StatefulWidget {
   static const routeName = '/PostCreate';
@@ -30,6 +32,23 @@ class _CreatePostState extends State<CreatePost> {
     'Culture'
   ];
   List<String> _activeChips = [];
+
+  void isLoggedIn() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isLoggedIn();
+  }
 
   Widget _buildChips() {
     return Wrap(
@@ -152,24 +171,26 @@ class _CreatePostState extends State<CreatePost> {
                   ]),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Center(
                 child: GestureDetector(
                   onTap: _getImage,
                   child: Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: _image.path.isNotEmpty
-          ? Image.file(_image, fit: BoxFit.cover)
-          : Icon(
-              Icons.add_a_photo,
-              size: 40.0,
-              color: Colors.grey,
-            ),
+                        ? Image.file(_image, fit: BoxFit.cover)
+                        : Icon(
+                            Icons.add_a_photo,
+                            size: 40.0,
+                            color: Colors.grey,
+                          ),
                   ),
                 ),
               ),
