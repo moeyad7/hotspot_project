@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../compnents/app_bar.dart';
-import '../compnents/nav_bar.dart';
 import '../compnents/buttons/buttons.dart';
+import '../compnents/nav_bar.dart';
 
 class CreatePost extends StatefulWidget {
   static const routeName = '/PostCreate';
@@ -13,6 +17,67 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  final ImagePicker _picker = ImagePicker();
+  File _image = File("");
+  List<String> _inactiveChips = [
+    'Nature',
+    'History',
+    'Entertainment',
+    'Food',
+    'Adventure',
+    'Religion',
+    'Shopping',
+    'Culture'
+  ];
+  List<String> _activeChips = [];
+
+  Widget _buildChips() {
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: _inactiveChips
+          .map((chip) => ChoiceChip(
+                label: Text(
+                  chip,
+                  style: TextStyle(
+                    color: _activeChips.contains(chip)
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+                selected: _activeChips.contains(chip),
+                onSelected: (selected) => _activateChip(selected, chip),
+                selectedColor: Colors.blue,
+                backgroundColor: _activeChips.contains(chip)
+                    ? Color(0xFF228CE5).withOpacity(0.4)
+                    : Color(0xFF228CE5).withOpacity(0.4),
+              ))
+          .toList(),
+    );
+  }
+
+  void _activateChip(bool selected, String chip) {
+    setState(() {
+      if (selected) {
+        _activeChips.add(chip);
+      } else {
+        _activeChips.remove(chip);
+      }
+    });
+  }
+
+  Future<void> _getImage() async {
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +117,6 @@ class _CreatePostState extends State<CreatePost> {
                 padding: EdgeInsets.only(left: 30, right: 30),
                 height: MediaQuery.of(context).size.width * 0.4,
                 child: TextField(
-                    // Single-line fields automatically scroll to the right when the text field is full
                     maxLines: 10,
                     decoration: InputDecoration(
                       labelText: "Description",
@@ -84,54 +148,29 @@ class _CreatePostState extends State<CreatePost> {
                     Wrap(
                         spacing: 3.0,
                         // gap between adjacent chips
-                        children: [
-                          CustomButton(
-                            name: 'Nature',
-                            color: ThemeData().colorScheme.tertiary,
-                            type: 'chips',
-                          ),
-                          CustomButton(
-                            name: 'History',
-                            color: ThemeData().colorScheme.tertiary,
-                            type: 'chips',
-                          ),
-                          CustomButton(
-                            name: 'Entertainment',
-                            color: ThemeData().colorScheme.tertiary,
-                            type: 'chips',
-                          ),
-                          CustomButton(
-                            name: 'Food',
-                            color: ThemeData().colorScheme.tertiary,
-                            type: 'chips',
-                          )
-                        ]),
-                    Wrap(
-                      spacing: 3,
-                      children: <Widget>[
-                        CustomButton(
-                          name: 'Adventure',
-                          color: ThemeData().colorScheme.tertiary,
-                          type: 'chips',
-                        ),
-                        CustomButton(
-                          name: 'Religion ',
-                          color: ThemeData().colorScheme.tertiary,
-                          type: 'chips',
-                        ),
-                        CustomButton(
-                          name: 'Shopping',
-                          color: ThemeData().colorScheme.tertiary,
-                          type: 'chips',
-                        ),
-                        CustomButton(
-                          name: 'Culture',
-                          color: ThemeData().colorScheme.tertiary,
-                          type: 'chips',
-                        ),
-                      ],
-                    ),
+                        children: [_buildChips()]),
                   ]),
+                ),
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: GestureDetector(
+                  onTap: _getImage,
+                  child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                    height: 200.0,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: _image.path.isNotEmpty
+          ? Image.file(_image, fit: BoxFit.cover)
+          : Icon(
+              Icons.add_a_photo,
+              size: 40.0,
+              color: Colors.grey,
+            ),
+                  ),
                 ),
               ),
               Container(
