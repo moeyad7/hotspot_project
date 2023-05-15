@@ -12,6 +12,7 @@ import './screens/create_post_screen.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
 import 'screens/post_details_screen.dart';
+import 'screens/account_required.dart';
 
 final customSwatch = MaterialColor(
   0xFFF58A07,
@@ -100,6 +101,9 @@ class MyApp extends StatelessWidget {
         VisitedScreen.routeName: (context) => VisitedScreen(),
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
         CreatePost.routeName: (context) => CreatePost(),
+        AccountRequiredScreen.routeName: (context) => AccountRequiredScreen(),
+
+
       },
     );
   }

@@ -30,6 +30,7 @@ class NavBarComponent extends StatelessWidget {
           case NavigationItem.trending:
             Navigator.popAndPushNamed(context, '/Trending');
             break;
+          
         }
       },
       items: const [

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Hotspot/screens/Account_Required.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +39,7 @@ class _CreatePostState extends State<CreatePost> {
 
     if (user == null) {
       Future.delayed(Duration.zero, () {
-        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(AccountRequiredScreen.routeName);
       });
     }
   }
