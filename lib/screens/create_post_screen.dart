@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -20,7 +22,9 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final ImagePicker _picker = ImagePicker();
-  File _image = File("");
+  File? _image;
+  var _title = TextEditingController();
+  var _description = TextEditingController();
   List<String> _inactiveChips = [
     'Nature',
     'History',
@@ -38,7 +42,8 @@ class _CreatePostState extends State<CreatePost> {
 
     if (user == null) {
       Future.delayed(Duration.zero, () {
-        Navigator.of(context).pushReplacementNamed(AccountRequiredScreen.routeName);
+        Navigator.of(context)
+            .pushReplacementNamed(AccountRequiredScreen.routeName);
       });
     }
   }
@@ -48,6 +53,49 @@ class _CreatePostState extends State<CreatePost> {
     // TODO: implement initState
     super.initState();
     isLoggedIn();
+  }
+
+  void _createPost() async {
+    if (_title.text.isNotEmpty &&
+        _description.text.isNotEmpty &&
+        _activeChips.isNotEmpty &&
+        _image != null) {
+      final user = await FirebaseAuth.instance.currentUser;
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('locations_image')
+          .child(user!.uid + DateTime.now().toString() + '.jpg');
+
+      await ref.putFile(_image!).whenComplete(() => print('image uploaded'));
+
+      final url = await ref.getDownloadURL();
+
+      FirebaseFirestore.instance.collection('locations').add({
+        'title': _title.text,
+        'description': _description.text,
+        'categories': _activeChips,
+        'image': url,
+        'userId': user.uid,
+        'time': DateTime.now(),
+      });
+      Navigator.of(context).pop();
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Please fill all the fields'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Ok'))
+              ],
+            );
+          });
+    }
   }
 
   Widget _buildChips() {
@@ -118,6 +166,12 @@ class _CreatePostState extends State<CreatePost> {
                 padding:
                     EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 15),
                 child: TextField(
+                  controller: _title,
+                  onChanged: (value) {
+                    setState(() {
+                      _title.text = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     labelText: "Title",
                     border: OutlineInputBorder(
@@ -136,6 +190,12 @@ class _CreatePostState extends State<CreatePost> {
                 padding: EdgeInsets.only(left: 30, right: 30),
                 height: MediaQuery.of(context).size.width * 0.4,
                 child: TextField(
+                    controller: _description,
+                    onChanged: (value) {
+                      setState(() {
+                        _description.text = value;
+                      });
+                    },
                     maxLines: 10,
                     decoration: InputDecoration(
                       labelText: "Description",
@@ -184,8 +244,8 @@ class _CreatePostState extends State<CreatePost> {
                       color: Colors.grey.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: _image.path.isNotEmpty
-                        ? Image.file(_image, fit: BoxFit.cover)
+                    child: _image != null
+                        ? Image.file(_image!, fit: BoxFit.cover)
                         : Icon(
                             Icons.add_a_photo,
                             size: 40.0,
@@ -200,6 +260,7 @@ class _CreatePostState extends State<CreatePost> {
                 child: CustomButton(
                   name: 'Post',
                   color: Color(0xFF2FC686),
+                  pressFunction: _createPost,
                 ),
               ),
             ],
