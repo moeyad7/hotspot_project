@@ -1,91 +1,28 @@
-import '../buttons/buttons.dart';
-import '../../data/DUMMMY_DATA.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class PostCard extends StatelessWidget {
+import '../buttons/buttons.dart';
+import '../../model/tourist_site.dart';
+
+class PostCard extends StatefulWidget {
   final TouristSite touristSites;
 
   const PostCard({Key? key, required this.touristSites}) : super(key: key);
 
   @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  @override
   Widget build(BuildContext context) {
-    Row Rating(double rating) {
-      const star = Icon(
-        Icons.star,
-        color: Colors.black,
-      );
-      const nostar = Icon(Icons.star_outline_outlined, color: Colors.white);
-      if (rating >= 5) {
-        return Row(
-          children: [
-            star,
-            star,
-            star,
-            star,
-            star,
-          ],
-        );
-      }
-      if (rating >= 4) {
-        return Row(
-          children: [
-            star,
-            star,
-            star,
-            star,
-            nostar,
-          ],
-        );
-      }
-      if (rating >= 3) {
-        return Row(
-          children: [
-            star,
-            star,
-            star,
-            nostar,
-            nostar,
-          ],
-        );
-      }
-      if (rating >= 2) {
-        return Row(
-          children: [
-            star,
-            star,
-            nostar,
-            nostar,
-            nostar,
-          ],
-        );
-      }
-      if (rating >= 1) {
-        return Row(
-          children: [
-            star,
-            nostar,
-            nostar,
-            nostar,
-            nostar,
-          ],
-        );
-      } else {
-        return Row(
-          children: [
-            nostar,
-            nostar,
-            nostar,
-            nostar,
-            nostar,
-          ],
-        );
-      }
-    }
+    bool seen = false;
+    bool saved = false;
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/post-detail');
+        // Navigator.pushNamed(context, '/post-detail');
       },
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -101,7 +38,7 @@ class PostCard extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: _buildImage(touristSites.imageUrl),
+                    child: _buildImage(widget.touristSites.imageUrl),
                   ),
                   Positioned(
                     left: 8,
@@ -110,16 +47,34 @@ class PostCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          touristSites.name,
+                          widget.touristSites.title,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Rating(touristSites.rating),
+                        widget.touristSites.rating != null
+                            ? RatingBar.builder(
+                                initialRating: widget.touristSites.rating,
+                                minRating: 0.5,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 30,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 1.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
+                              )
+                            : Container(),
                         Row(
-                          children: touristSites.category.map((tag) {
+                          children: widget.touristSites.category.map((tag) {
                             return Container(
                               margin: EdgeInsets.only(
                                 left: 4,
@@ -146,7 +101,7 @@ class PostCard extends StatelessWidget {
                 children: [
                   SizedBox(height: 8),
                   Text(
-                    touristSites.description,
+                    widget.touristSites.description,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
@@ -160,17 +115,32 @@ class PostCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          CustomButton(
-                            name: 'seen',
-                            color: Colors.black,
-                            type: 'icons',
-                            icon: Icons.check_circle_outline_rounded,
+                          IconButton(
+                            icon: Icon(
+                              seen == true
+                                  ? Icons.check_circle_rounded
+                                  : Icons.check_circle_outline_rounded,
+                              color: seen == true ? Colors.green : null,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                seen = !seen;
+                                print(seen);
+                              });
+                            },
                           ),
-                          CustomButton(
-                            name: 'save',
-                            color: Colors.black,
-                            type: 'icons',
-                            icon: Icons.bookmark_border_rounded,
+                          IconButton(
+                            icon: Icon(
+                              saved == true
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border_rounded,
+                              color: saved == true ? Colors.orange : null,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                saved = !saved;
+                              });
+                            },
                           ),
                         ],
                       ),

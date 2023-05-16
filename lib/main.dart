@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // onGenerateRoute: AppRouter().generateRoute,
       title: 'Hotspot',
       theme: ThemeData(
         useMaterial3: true,
@@ -95,15 +94,13 @@ class MyApp extends StatelessWidget {
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
         HomePage.routeName: (context) => HomePage(),
-        PostDetail.routeName: (context) => PostDetail(),
+        // PostDetail.routeName: (context) => PostDetail(),
         ProfileScreen.routeName: (context) => ProfileScreen(),
         SavedScreen.routeName: (context) => SavedScreen(),
         VisitedScreen.routeName: (context) => VisitedScreen(),
         EditProfileScreen.routeName: (context) => EditProfileScreen(),
         CreatePost.routeName: (context) => CreatePost(),
         AccountRequiredScreen.routeName: (context) => AccountRequiredScreen(),
-
-
       },
     );
   }
