@@ -52,11 +52,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'email': email,
           'dateOfBirth': dateOfBirth,
           'image_url': url,
-          'ratings': [],
-          'comments': [],
-          'saved': [],
-          'visited': [],
-          'recent_searches': [],
         });
       }
       setState(() {

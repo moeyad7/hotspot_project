@@ -70,7 +70,7 @@ class _CreatePostState extends State<CreatePost> {
 
       final url = await ref.getDownloadURL();
 
-      FirebaseFirestore.instance.collection('locations').add({
+      await FirebaseFirestore.instance.collection('locations').add({
         'title': _title.text,
         'description': _description.text,
         'categories': _activeChips,
@@ -78,7 +78,7 @@ class _CreatePostState extends State<CreatePost> {
         'userId': user.uid,
         'time': DateTime.now(),
       });
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed('/HomePage');
     } else {
       showDialog(
           context: context,
