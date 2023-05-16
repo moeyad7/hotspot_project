@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import './saved_screen.dart';
 import './visited_screen.dart';
-import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
+import '../compnents/app_bar.dart';
 import './edit_profile_screen.dart';
-import '../../screens/account_required.dart';
 import '../compnents/buttons/buttons.dart';
+import '../../screens/account_required.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = '/ProfileScreen';

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../data/DUMMMY_DATA.dart';
 import '../buttons/buttons.dart';
+import '../../data/DUMMMY_DATA.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
   final TouristSite touristSites;

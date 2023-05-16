@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:Hotspot/screens/Account_Required.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../screens/auth_screen.dart';
+import '../screens/account_required.dart';
 import '../compnents/buttons/buttons.dart';
 
 class CreatePost extends StatefulWidget {
