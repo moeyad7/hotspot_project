@@ -167,11 +167,6 @@ class _CreatePostState extends State<CreatePost> {
                     EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 15),
                 child: TextField(
                   controller: _title,
-                  onChanged: (value) {
-                    setState(() {
-                      _title.text = value;
-                    });
-                  },
                   decoration: InputDecoration(
                     labelText: "Title",
                     border: OutlineInputBorder(
@@ -191,11 +186,6 @@ class _CreatePostState extends State<CreatePost> {
                 height: MediaQuery.of(context).size.width * 0.4,
                 child: TextField(
                     controller: _description,
-                    onChanged: (value) {
-                      setState(() {
-                        _description.text = value;
-                      });
-                    },
                     maxLines: 10,
                     decoration: InputDecoration(
                       labelText: "Description",
