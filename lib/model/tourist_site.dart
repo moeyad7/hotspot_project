@@ -12,8 +12,8 @@ class TouristSite {
     required this.title,
     required this.description,
     required this.category,
-    required this.imageUrl,
     required this.added,
+    required this.imageUrl,
     this.rating = 0.0,
   });
 }

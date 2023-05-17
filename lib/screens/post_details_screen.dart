@@ -9,9 +9,6 @@ import '../compnents/buttons/buttons.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';
-  final TouristSite? touristSite;
-
-  const PostDetail({this.touristSite});
 
   @override
   _PostDetailState createState() => _PostDetailState();
@@ -60,13 +57,13 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildTitle(String title) {
     return AnimatedOpacity(
       opacity: _isVisible ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
       child: Text(
-        widget.touristSite!.title,
+        title,
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 24,
@@ -109,6 +106,8 @@ class _PostDetailState extends State<PostDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final touristSite =
+        ModalRoute.of(context)?.settings.arguments as TouristSite;
     return Scaffold(
       appBar: MyAppBar(context),
       body: Column(
@@ -119,7 +118,7 @@ class _PostDetailState extends State<PostDetail> {
               bottomRight: Radius.circular(15),
             ),
             child: _isVisible
-                ? Container() //widget.touristSite.imageUrl ? _buildImage(widget.touristSite.imageUrl)
+                ? _buildImage(touristSite.imageUrl)
                 : Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -132,14 +131,14 @@ class _PostDetailState extends State<PostDetail> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              DateFormat.yMd().format(widget.touristSite!.added),
+              DateFormat.yMd().format(touristSite.added),
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 16), 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(child: _buildTitle()),
+              Expanded(child: _buildTitle(touristSite.title)),
               SizedBox(width: 16),
               Column(
                 children: [
@@ -186,7 +185,7 @@ class _PostDetailState extends State<PostDetail> {
           ),
           SizedBox(height: 8),
           Row(
-            children: widget.touristSite!.category.map((tag) {
+            children: touristSite.category.map((tag) {
               return Container(
                 margin: EdgeInsets.only(
                   left: 4,
@@ -217,7 +216,7 @@ class _PostDetailState extends State<PostDetail> {
               child: _isVisible
                   ? SingleChildScrollView(
                       child: Text(
-                        widget.touristSite!.description,
+                        touristSite.description,
                         style: TextStyle(
                           fontSize: 16,
                           height: 1.5,
