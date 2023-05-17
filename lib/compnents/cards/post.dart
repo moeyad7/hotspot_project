@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../buttons/buttons.dart';
@@ -20,18 +20,16 @@ class _PostCardState extends State<PostCard> {
   var _seen = false;
   var _saved = false;
 
-  var user;
+  var user = FirebaseAuth.instance.currentUser;
 
   void getData() async {
-    user = await FirebaseAuth.instance.currentUser;
-
     if (user != null) {
       try {
         final user_data = await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(user!.uid)
             .get();
-
+        print(user);
         if (user_data['seen'] != null) {
           user_data['seen'].forEach((element) {
             if (element == widget.touristSites.id) {
@@ -64,30 +62,40 @@ class _PostCardState extends State<PostCard> {
     getData();
   }
 
-  void addOrDeleteSeen() {
-    final user = FirebaseAuth.instance.currentUser;
+  void addOrDeleteSeen() async {
     if (user != null) {
       if (!_seen) {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
           'seen': FieldValue.arrayRemove([widget.touristSites.id])
         });
       } else {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
           'seen': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
     }
   }
 
-  void addOrDeleteSaved() {
-    final user = FirebaseAuth.instance.currentUser;
+  void addOrDeleteSaved() async {
     if (user != null) {
       if (!_saved) {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
           'saved': FieldValue.arrayRemove([widget.touristSites.id])
         });
       } else {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({
           'saved': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
@@ -126,7 +134,7 @@ class _PostCardState extends State<PostCard> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      widget.touristSites.rating != null
+                      widget.touristSites.rating != 0.0
                           ? RatingBar.builder(
                               initialRating: widget.touristSites.rating,
                               minRating: 0.5,
