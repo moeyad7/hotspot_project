@@ -1,10 +1,11 @@
+import 'package:Hotspot/model/arguments.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../compnents/app_bar.dart';
-import '../model/tourist_site.dart';
 import '../compnents/buttons/buttons.dart';
 
 class PostDetail extends StatefulWidget {
@@ -16,6 +17,7 @@ class PostDetail extends StatefulWidget {
 
 class _PostDetailState extends State<PostDetail> {
   bool _isVisible = false;
+  var user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -106,8 +108,12 @@ class _PostDetailState extends State<PostDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final touristSite =
-        ModalRoute.of(context)?.settings.arguments as TouristSite;
+    final args = ModalRoute.of(context)?.settings.arguments as Arguments;
+
+    var touristSite = args.touristSite;
+    bool _seen = args.seen;
+    bool _saved = args.saved;
+
     return Scaffold(
       appBar: MyAppBar(context),
       body: Column(
@@ -134,7 +140,7 @@ class _PostDetailState extends State<PostDetail> {
               DateFormat.yMd().format(touristSite.added),
             ),
           ),
-          SizedBox(height: 16), 
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -146,26 +152,16 @@ class _PostDetailState extends State<PostDetail> {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      Container(
-                        width: 20,
-                        height: 20,
-                        child: CustomButton(
-                          name: 'seen',
-                          color: Colors.black,
-                          type: 'icons',
-                          icon: Icons.check_circle_outline_rounded,
-                        ),
+                      Icon(
+                        _seen
+                            ? Icons.check_circle_rounded
+                            : Icons.check_circle_outline_rounded,
+                        color: _seen ? Colors.green : null,
                       ),
-                      SizedBox(width: 35),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        child: CustomButton(
-                          name: 'save',
-                          color: Colors.black,
-                          type: 'icons',
-                          icon: Icons.bookmark_border_rounded,
-                        ),
+                      SizedBox(width: 15),
+                      Icon(
+                        _saved ? Icons.bookmark : Icons.bookmark_border_rounded,
+                        color: _saved ? Colors.orange : null,
                       ),
                     ],
                   ),

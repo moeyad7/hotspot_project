@@ -1,3 +1,4 @@
+import 'package:Hotspot/model/arguments.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -249,8 +250,12 @@ class _PostCardState extends State<PostCard> {
                       type: 'elevated',
                       icon: Icons.zoom_out_map_rounded,
                       pressFunction: () {
-                        Navigator.pushNamed(context, PostDetail.routeName,
-                            arguments: widget.touristSites);
+                        Navigator.pushNamed(
+                          context,
+                          PostDetail.routeName,
+                          // arguments: widget.touristSites,
+                          arguments: Arguments( widget.touristSites, _seen, _saved),
+                        );
                       },
                     ),
                   ],
