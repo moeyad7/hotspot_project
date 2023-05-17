@@ -103,6 +103,11 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
+  void calculateAverageRating(){
+    // calculate the average rating from array ratings in the database
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -253,7 +258,6 @@ class _PostCardState extends State<PostCard> {
                         Navigator.pushNamed(
                           context,
                           PostDetail.routeName,
-                          // arguments: widget.touristSites,
                           arguments: Arguments( widget.touristSites, _seen, _saved),
                         );
                       },

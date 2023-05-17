@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../model/arguments.dart';
 import '../compnents/app_bar.dart';
@@ -78,30 +79,48 @@ class _PostDetailState extends State<PostDetail> {
       opacity: _isVisible ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-      child: Row(
+      child: Column(
         children: [
-          Icon(
-            Icons.star,
-            color: Colors.black,
+          Text(
+            "Your Rating",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          Icon(
-            Icons.star,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.star_half,
-            color: Colors.black,
+          RatingBar.builder(
+            initialRating: 3,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemSize: 30,
+            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+            itemBuilder: (context, _) => Icon(
+              Icons.star_rounded,
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
           ),
         ],
       ),
+    );
+  }
+
+  void _bottomSheet(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: Container(
+            child: Text('!!!!!!!!E3mel el comments ya mohamed!!!!!!!!'),
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
     );
   }
 
@@ -236,6 +255,9 @@ class _PostDetailState extends State<PostDetail> {
                 color: ThemeData().colorScheme.tertiary,
                 type: 'elevated',
                 icon: Icons.comment,
+                pressFunction: () {
+                  _bottomSheet(context);
+                },
               ),
             ],
           ),
