@@ -1,4 +1,5 @@
 class TouristSite {
+  final String id;
   final String title;
   final String description;
   final double rating;
@@ -7,6 +8,7 @@ class TouristSite {
   final DateTime added;
 
   TouristSite({
+    required this.id,
     required this.title,
     required this.description,
     required this.category,

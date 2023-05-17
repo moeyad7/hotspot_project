@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return PostCard(
                         touristSites: TouristSite(
+                          id: locationDocs[index].id,
                           title: locationDocs[index]['title'],
                           description: locationDocs[index]['description'],
                           imageUrl: locationDocs[index]['image'],
