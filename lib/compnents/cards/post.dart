@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../buttons/buttons.dart';
 import '../../model/tourist_site.dart';
+import '../../screens/post_details_screen.dart';
 
 class PostCard extends StatefulWidget {
   final TouristSite touristSites;
@@ -247,6 +248,10 @@ class _PostCardState extends State<PostCard> {
                       color: ThemeData().colorScheme.tertiary,
                       type: 'elevated',
                       icon: Icons.zoom_out_map_rounded,
+                      pressFunction: () {
+                        Navigator.pushNamed(context, PostDetail.routeName,
+                            arguments: widget.touristSites);
+                      },
                     ),
                   ],
                 ),
