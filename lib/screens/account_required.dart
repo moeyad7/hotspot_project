@@ -4,7 +4,6 @@ import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../screens/auth_screen.dart';
 import '../compnents/buttons/buttons.dart';
-import 'package:lottie/lottie.dart';
 
 class AccountRequiredScreen extends StatelessWidget {
   const AccountRequiredScreen({Key? key}) : super(key: key);

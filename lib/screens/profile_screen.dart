@@ -7,6 +7,8 @@ import './visited_screen.dart';
 import '../compnents/nav_bar.dart';
 import '../compnents/app_bar.dart';
 import './edit_profile_screen.dart';
+import '../model/tourist_site.dart';
+import '../compnents/cards/post.dart';
 import '../compnents/buttons/buttons.dart';
 import '../../screens/account_required.dart';
 
@@ -19,14 +21,19 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = true;
+  var _userId;
   var _userName;
   var _userImage;
+  var _saved;
+  var _seen;
+  var ratings;
   void isLoggedIn() async {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
       Future.delayed(Duration.zero, () {
-        Navigator.of(context).pushReplacementNamed(AccountRequiredScreen.routeName);
+        Navigator.of(context)
+            .pushReplacementNamed(AccountRequiredScreen.routeName);
       });
     } else {
       getData();
@@ -41,8 +48,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .get();
 
     setState(() {
+      _userId = user.uid;
       _userName = userData['username'];
       _userImage = userData['image_url'];
+      _saved = userData['saved'].length;
+      _seen = userData['seen'].length;
+      ratings = userData['ratings'].length;
       isLoading = false;
     });
   }
@@ -96,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Column(
                                     children: [
                                       Text(
-                                        '69',
+                                        ratings.toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -125,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(height: 10),
                               CustomButton(
-                                name: 'Saved • ' + '69',
+                                name: 'Saved • ' + _saved.toString(),
                                 color: Color(0xFFD9D9D9),
                                 icon: Icons.bookmark,
                                 iconColor: Color(0xFFF58A07),
@@ -136,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(height: 10),
                               CustomButton(
-                                name: 'Visited • ' + '69',
+                                name: 'Visited • ' + _seen.toString(),
                                 color: Color(0xFFD9D9D9),
                                 icon: Icons.check_circle,
                                 iconColor: Color(0xFF2FC686),
@@ -174,6 +185,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Divider(
                       color: Colors.black,
+                    ),
+                    SizedBox(height: 10),
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('locations')
+                          .where('userId', isEqualTo: _userId)
+                          .snapshots(),
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return Center(
+                            child: Text('No Posts Yet'),
+                          );
+                        }
+
+                        final locationDocs = snapshot.data!.docs;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: locationDocs.length,
+                          itemBuilder: (context, index) {
+                            return PostCard(
+                              touristSites: TouristSite(
+                                id: locationDocs[index].id,
+                                title: locationDocs[index]['title'],
+                                description: locationDocs[index]['description'],
+                                imageUrl: locationDocs[index]['image'],
+                                category: List<String>.from(
+                                    locationDocs[index]['categories']),
+                                added: locationDocs[index]['time'].toDate(),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),

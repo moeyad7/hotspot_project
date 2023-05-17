@@ -7,7 +7,6 @@ import '../compnents/cards/post.dart';
 import '../compnents/nav_bar.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
   static const routeName = '/HomePage';
 
   @override
@@ -17,7 +16,7 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('locations')
                   .snapshots(),
@@ -44,6 +43,7 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return PostCard(
                       touristSites: TouristSite(
+                        id: locationDocs[index].id,
                         title: locationDocs[index]['title'],
                         description: locationDocs[index]['description'],
                         imageUrl: locationDocs[index]['image'],
