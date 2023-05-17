@@ -1,10 +1,9 @@
-import 'package:Hotspot/model/arguments.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../model/arguments.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
 
