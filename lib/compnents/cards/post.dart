@@ -29,7 +29,6 @@ class _PostCardState extends State<PostCard> {
             .collection('users')
             .doc(user!.uid)
             .get();
-        print(user);
         if (user_data['seen'] != null) {
           user_data['seen'].forEach((element) {
             if (element == widget.touristSites.id) {

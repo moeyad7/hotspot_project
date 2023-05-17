@@ -1,14 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../compnents/cards/post.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../model/tourist_site.dart';
+import '../compnents/cards/post.dart';
 
 class SavedScreen extends StatefulWidget {
   static const routeName = '/SavedScreen';
@@ -89,6 +88,7 @@ class _SavedScreenState extends State<SavedScreen> {
                               child: Text('No data available.'),
                             );
                           }
+                          final locationDocs = snapshot.data!.docs;
                           return ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -97,14 +97,13 @@ class _SavedScreenState extends State<SavedScreen> {
                               return PostCard(
                                 touristSites: TouristSite(
                                   id: userDocs["saved"][index],
-                                  title: snapshot.data!.docs[index]['title'],
-                                  description: snapshot.data!.docs[index]
+                                  title: locationDocs[index]['title'],
+                                  description: locationDocs[index]
                                       ['description'],
-                                  imageUrl: snapshot.data!.docs[index]['image'],
+                                  imageUrl: locationDocs[index]['image'],
                                   category: List<String>.from(
-                                      snapshot.data!.docs[index]['categories']),
-                                  added: snapshot.data!.docs[index]['time']
-                                      .toDate(),
+                                      locationDocs[index]['categories']),
+                                  added: locationDocs[index]['time'].toDate(),
                                 ),
                               );
                             },
