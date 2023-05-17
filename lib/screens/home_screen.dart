@@ -18,7 +18,9 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance.collection('locations').snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('locations')
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -45,7 +47,8 @@ class HomePage extends StatelessWidget {
                         title: locationDocs[index]['title'],
                         description: locationDocs[index]['description'],
                         imageUrl: locationDocs[index]['image'],
-                        category: List<String>.from(locationDocs[index]['categories']),
+                        category: List<String>.from(
+                            locationDocs[index]['categories']),
                         added: locationDocs[index]['time'].toDate(),
                       ),
                     );
