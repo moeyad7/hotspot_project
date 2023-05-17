@@ -74,6 +74,13 @@ class _PostCardState extends State<PostCard> {
           'seen': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You need to login first'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -89,6 +96,13 @@ class _PostCardState extends State<PostCard> {
           'saved': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You need to login first'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
