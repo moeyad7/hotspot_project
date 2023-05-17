@@ -20,8 +20,10 @@ class _PostCardState extends State<PostCard> {
   var _seen = false;
   var _saved = false;
 
+  var user;
+
   void getData() async {
-    final user = await FirebaseAuth.instance.currentUser;
+    user = await FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       try {
@@ -74,13 +76,6 @@ class _PostCardState extends State<PostCard> {
           'seen': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('You need to login first'),
-          duration: Duration(seconds: 2),
-        ),
-      );
     }
   }
 
@@ -96,13 +91,6 @@ class _PostCardState extends State<PostCard> {
           'saved': FieldValue.arrayUnion([widget.touristSites.id])
         });
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('You need to login first'),
-          duration: Duration(seconds: 2),
-        ),
-      );
     }
   }
 
@@ -206,12 +194,21 @@ class _PostCardState extends State<PostCard> {
                                 : Icons.check_circle_outline_rounded,
                             color: _seen ? Colors.green : null,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _seen = !_seen;
-                            });
-                            addOrDeleteSeen();
-                          },
+                          onPressed: user != null
+                              ? () {
+                                  setState(() {
+                                    _seen = !_seen;
+                                  });
+                                  addOrDeleteSeen();
+                                }
+                              : () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('You need to login first'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                },
                         ),
                         IconButton(
                           icon: Icon(
@@ -220,12 +217,21 @@ class _PostCardState extends State<PostCard> {
                                 : Icons.bookmark_border_rounded,
                             color: _saved ? Colors.orange : null,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _saved = !_saved;
-                            });
-                            addOrDeleteSaved();
-                          },
+                          onPressed: user != null
+                              ? () {
+                                  setState(() {
+                                    _saved = !_saved;
+                                  });
+                                  addOrDeleteSaved();
+                                }
+                              : () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('You need to login first'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                },
                         ),
                       ],
                     ),

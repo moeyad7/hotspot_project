@@ -8,7 +8,6 @@ import '../compnents/nav_bar.dart';
 import '../compnents/cards/post.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
   static const routeName = '/HomePage';
 
   @override
@@ -31,6 +30,11 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(snapshot.error.toString()),
                     );
                   }
                   final locationDocs = snapshot.data!.docs;
