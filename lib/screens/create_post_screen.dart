@@ -59,7 +59,8 @@ class _CreatePostState extends State<CreatePost> {
     if (_title.text.isNotEmpty &&
         _description.text.isNotEmpty &&
         _activeChips.isNotEmpty &&
-        _image != null) {
+        _image != null &&
+        _rating != 0.0) {
       final user = await FirebaseAuth.instance.currentUser;
       final ref = FirebaseStorage.instance
           .ref()
