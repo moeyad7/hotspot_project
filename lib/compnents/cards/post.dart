@@ -122,8 +122,6 @@ class _PostCardState extends State<PostCard> {
         averageRating =
             (sum / ratings.length).isNaN ? 0.0 : (sum / ratings.length);
       });
-      print(widget.touristSites.title);
-      print(averageRating);
     });
   }
 

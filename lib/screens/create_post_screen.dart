@@ -88,14 +88,14 @@ class _CreatePostState extends State<CreatePost> {
         ],
       });
 
-      // Add New Post to User need testing
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        "ratings": {
-          FieldValue.arrayUnion([
-            {"location_id": newPost.id, "rating": _rating}
-          ])
-        },
-      });
+        "ratings": FieldValue.arrayUnion([
+          {
+            "location_id": newPost.id,
+            "rating": _rating,
+          }
+        ])
+      }, SetOptions(merge: true));
 
       Navigator.of(context).pushReplacementNamed('/HomePage');
     } else {

@@ -103,7 +103,7 @@ class _PostDetailState extends State<PostDetail> {
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (rating) {
-                      print(rating);
+                      // print(rating);
                     },
                   ),
                 ],
