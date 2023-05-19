@@ -69,8 +69,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: MyAppBar(context),
       body: isLoading == true
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Container(
+          : Column(
+              children: [Container(
                 margin: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,29 +186,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         }
 
                         final locationDocs = snapshot.data!.docs;
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: locationDocs.length,
-                          itemBuilder: (context, index) {
-                            return PostCard(
-                              touristSites: TouristSite(
-                                id: locationDocs[index].id,
-                                title: locationDocs[index]['title'],
-                                description: locationDocs[index]['description'],
-                                imageUrl: locationDocs[index]['image'],
-                                category: List<String>.from(
-                                    locationDocs[index]['categories']),
-                                added: locationDocs[index]['time'].toDate(),
-                                ratings: locationDocs[index]['ratings'],
-                              ),
-                            );
-                          },
+                        return Container(
+                          height: 262,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: locationDocs.length,
+                            itemBuilder: (context, index) {
+                              return PostCard(
+                                touristSites: TouristSite(
+                                  id: locationDocs[index].id,
+                                  title: locationDocs[index]['title'],
+                                  description: locationDocs[index]['description'],
+                                  imageUrl: locationDocs[index]['image'],
+                                  category: List<String>.from(
+                                      locationDocs[index]['categories']),
+                                  added: locationDocs[index]['time'].toDate(),
+                                  ratings: locationDocs[index]['ratings'],
+                                ),
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
                   ],
                 ),
-              ),
+              ),]
             ),
       bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
     );

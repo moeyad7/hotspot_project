@@ -40,69 +40,67 @@ class _VisitedScreenState extends State<VisitedScreen> {
               );
             }
             final userDocs = snapshot.data!;
-            return SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 45,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_circle,
-                            color: Color(0xFF2FC686),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Visited • " + userDocs["seen"].length.toString(),
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+            return Column(
+              children: [
+                Container(
+                  height: 45,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: Color(0xFF2FC686),
                       ),
-                    ),
-                    Divider(
-                      color: Colors.black,
-                      thickness: 2,
-                    ),
-                    StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('locations')
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Visited • " + userDocs["seen"].length.toString(),
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Colors.black,
+                  thickness: 2,
+                ),
+                Expanded(
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('locations')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                        if (!snapshot.hasData || snapshot.data == null) {
-                          // Stream has no data, show a message
-                          return Center(
-                            child: Text('No data available.'),
-                          );
-                        }
+                      if (!snapshot.hasData || snapshot.data == null) {
+                        // Stream has no data, show a message
+                        return Center(
+                          child: Text('No data available.'),
+                        );
+                      }
 
-                        final locationDocs = snapshot.data!.docs;
-                        List result = [];
-                        List ids = [];
-                        for (var i = 0; i < userDocs['seen'].length; i++) {
-                          var currentId = userDocs['seen'][i];
-                          for (var j = 0; j < locationDocs.length; j++) {
-                            if (currentId == locationDocs[j].id) {
-                              result.add(locationDocs[j].data());
-                              ids.add(locationDocs[j]);
-                            }
+                      final locationDocs = snapshot.data!.docs;
+                      List result = [];
+                      List ids = [];
+                      for (var i = 0; i < userDocs['seen'].length; i++) {
+                        var currentId = userDocs['seen'][i];
+                        for (var j = 0; j < locationDocs.length; j++) {
+                          if (currentId == locationDocs[j].id) {
+                            result.add(locationDocs[j].data());
+                            ids.add(locationDocs[j]);
                           }
                         }
+                      }
 
-                        return ListView.builder(
+                      return Container(
+                        height: 45,
+                        child: ListView.builder(
                           shrinkWrap: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: result.length,
@@ -120,12 +118,12 @@ class _VisitedScreenState extends State<VisitedScreen> {
                               ),
                             );
                           },
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
             );
           }),
       bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
