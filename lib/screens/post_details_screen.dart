@@ -1,3 +1,4 @@
+
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
-  Widget _buildRating(List<dynamic> touristSiteList) {
+  Widget _buildRating(List<dynamic> touristSiteList, String touristSiteId) {
     double oldRating = getUserRating(touristSiteList);
     return AnimatedOpacity(
         opacity: _isVisible ? 1.0 : 0.0,
@@ -104,7 +105,25 @@ class _PostDetailState extends State<PostDetail> {
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                // print(rating);
+                if (oldRating != rating) {
+                  FirebaseFirestore.instance
+                      .collection('locations')
+                      .doc(touristSiteId)
+                      .update({
+                    'ratings': FieldValue.arrayRemove([
+                      {'user_id': user!.uid, 'rating': oldRating}
+                    ])
+                  });
+                  FirebaseFirestore.instance
+                      .collection('locations')
+                      .doc(touristSiteId)
+                      .update({
+                    'ratings': FieldValue.arrayUnion([
+                      {'user_id': user!.uid, 'rating': rating}
+                    ])
+                  });
+                  oldRating = rating;
+                }
               },
             ),
           ],
@@ -119,7 +138,7 @@ class _PostDetailState extends State<PostDetail> {
 
     for (int i = 0; i < touristSitelist.length; i++) {
       if (touristSitelist[i]['user_id'] == user!.uid) {
-        oldRating = touristSitelist[i]['rating'];
+        oldRating = touristSitelist[i]['rating'].toDouble();
         break;
       }
     }
@@ -218,7 +237,7 @@ class _PostDetailState extends State<PostDetail> {
             ],
           ),
           // MY Rating
-          if (user != null) _buildRating(touristSite.ratings),
+          if (user != null) _buildRating(touristSite.ratings, touristSite.id),
           SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,

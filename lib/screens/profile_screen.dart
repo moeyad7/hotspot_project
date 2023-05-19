@@ -53,7 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _userImage = userData['image_url'];
       _saved = userData['saved'].length;
       _seen = userData['seen'].length;
-      ratings = userData['ratings'].length;
       isLoading = false;
     });
   }
@@ -218,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 category: List<String>.from(
                                     locationDocs[index]['categories']),
                                 added: locationDocs[index]['time'].toDate(),
-                                ratings: locationDocs[index]['location'],
+                                ratings: locationDocs[index]['ratings'],
                               ),
                             );
                           },
