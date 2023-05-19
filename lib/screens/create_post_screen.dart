@@ -25,6 +25,8 @@ class _CreatePostState extends State<CreatePost> {
   var _title = TextEditingController();
   var _description = TextEditingController();
   var _rating = 0.0;
+  bool _isLoading = false;
+
   List<String> _inactiveChips = [
     'Nature',
     'History',
@@ -61,6 +63,10 @@ class _CreatePostState extends State<CreatePost> {
         _activeChips.isNotEmpty &&
         _image != null &&
         _rating != 0.0) {
+      setState(() {
+        _isLoading = true;
+      });
+
       final user = await FirebaseAuth.instance.currentUser;
       final ref = FirebaseStorage.instance
           .ref()
@@ -98,6 +104,9 @@ class _CreatePostState extends State<CreatePost> {
       }, SetOptions(merge: true));
 
       Navigator.of(context).pushReplacementNamed('/HomePage');
+      setState(() {
+        _isLoading = false;
+      });
     } else {
       showDialog(
           context: context,
@@ -118,28 +127,32 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   Widget _buildChips() {
-    return Wrap(
-      spacing: 8.0,
-      runSpacing: 8.0,
-      children: _inactiveChips
-          .map((chip) => ChoiceChip(
-                label: Text(
-                  chip,
-                  style: TextStyle(
-                    color: _activeChips.contains(chip)
-                        ? Colors.white
-                        : Colors.black,
-                  ),
-                ),
-                selected: _activeChips.contains(chip),
-                onSelected: (selected) => _activateChip(selected, chip),
-                selectedColor: Colors.blue,
-                backgroundColor: _activeChips.contains(chip)
-                    ? Color(0xFF228CE5).withOpacity(0.4)
-                    : Color(0xFF228CE5).withOpacity(0.4),
-              ))
-          .toList(),
-    );
+    return _isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: _inactiveChips
+                .map((chip) => ChoiceChip(
+                      label: Text(
+                        chip,
+                        style: TextStyle(
+                          color: _activeChips.contains(chip)
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ),
+                      selected: _activeChips.contains(chip),
+                      onSelected: (selected) => _activateChip(selected, chip),
+                      selectedColor: Colors.blue,
+                      backgroundColor: _activeChips.contains(chip)
+                          ? Color(0xFF228CE5).withOpacity(0.4)
+                          : Color(0xFF228CE5).withOpacity(0.4),
+                    ))
+                .toList(),
+          );
   }
 
   void _activateChip(bool selected, String chip) {

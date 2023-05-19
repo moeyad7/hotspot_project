@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/forms/auth_form.dart';
+import '../screens/home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/AuthScreen';
@@ -59,6 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
       setState(() {
         _isLoading = false;
       });
+      Navigator.of(context).pushReplacementNamed(HomePage.routeName);
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 

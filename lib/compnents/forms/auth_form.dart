@@ -257,10 +257,21 @@ class _AuthFormState extends State<AuthForm> {
                           FocusScope.of(context).requestFocus(new FocusNode());
 
                           date = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now()) as DateTime;
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: ThemeData.light().copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary: Color(0xFFF58A07),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          ) as DateTime;
 
                           dateOfBirth.text =
                               DateFormat('dd/MM/yyyy').format(date);
