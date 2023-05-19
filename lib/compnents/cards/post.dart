@@ -1,11 +1,11 @@
-import 'package:Hotspot/model/arguments.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../buttons/buttons.dart';
+import '../rating/star_rating.dart';
+import '../../model/arguments.dart';
 import '../../model/tourist_site.dart';
 import '../../screens/post_details_screen.dart';
 
@@ -23,6 +23,7 @@ class _PostCardState extends State<PostCard> {
   var _saved = false;
 
   var user = FirebaseAuth.instance.currentUser;
+  var averageRating = 0.0;
 
   void getData() async {
     if (user != null) {
@@ -61,6 +62,7 @@ class _PostCardState extends State<PostCard> {
     // TODO: implement initState
     super.initState();
     getData();
+    calculateAverageRating();
   }
 
   void addOrDeleteSeen() async {
@@ -103,9 +105,26 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
-  void calculateAverageRating(){
-    // calculate the average rating from array ratings in the database
-    
+  void calculateAverageRating() {
+    // calculate the average rating from array ratings that contains a map for each rating of each user in the firebase
+
+    FirebaseFirestore.instance
+        .collection('locations')
+        .doc(widget.touristSites.id)
+        .get()
+        .then((value) {
+      var ratings = value['ratings'];
+      var sum = 0.0;
+      for (var i = 0; i < ratings.length; i++) {
+        sum += ratings[i]['rating'];
+      }
+      setState(() {
+        averageRating =
+            (sum / ratings.length).isNaN ? 0.0 : (sum / ratings.length);
+      });
+      print(widget.touristSites.title);
+      print(averageRating);
+    });
   }
 
   @override
@@ -132,33 +151,19 @@ class _PostCardState extends State<PostCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.touristSites.title,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            widget.touristSites.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          StarRating(starCount: 5, rating: averageRating),
+                        ],
                       ),
-                      widget.touristSites.rating != 0.0
-                          ? RatingBar.builder(
-                              initialRating: widget.touristSites.rating,
-                              minRating: 0.5,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 30,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 1.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            )
-                          : Container(),
                       Row(
                         children: widget.touristSites.category.map((tag) {
                           return Container(
@@ -258,7 +263,8 @@ class _PostCardState extends State<PostCard> {
                         Navigator.pushNamed(
                           context,
                           PostDetail.routeName,
-                          arguments: Arguments( widget.touristSites, _seen, _saved),
+                          arguments:
+                              Arguments(widget.touristSites, _seen, _saved),
                         );
                       },
                     ),
