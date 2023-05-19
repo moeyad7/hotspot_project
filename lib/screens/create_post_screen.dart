@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
@@ -13,8 +14,6 @@ import '../compnents/buttons/buttons.dart';
 
 class CreatePost extends StatefulWidget {
   static const routeName = '/PostCreate';
-
-  const CreatePost({super.key});
 
   @override
   State<CreatePost> createState() => _CreatePostState();
@@ -25,6 +24,7 @@ class _CreatePostState extends State<CreatePost> {
   File? _image;
   var _title = TextEditingController();
   var _description = TextEditingController();
+  var _rating = 0.0;
   List<String> _inactiveChips = [
     'Nature',
     'History',
@@ -77,6 +77,12 @@ class _CreatePostState extends State<CreatePost> {
         'image': url,
         'userId': user.uid,
         'time': DateTime.now(),
+        "ratings": [
+          {
+            "user_id": user.uid,
+            "rating": _rating,
+          }
+        ],
       });
       Navigator.of(context).pushReplacementNamed('/HomePage');
     } else {
@@ -225,23 +231,59 @@ class _CreatePostState extends State<CreatePost> {
                 height: 10,
               ),
               Center(
-                child: GestureDetector(
-                  onTap: _getImage,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 200.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(10.0),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: _getImage,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: _image != null
+                            ? Image.file(_image!, fit: BoxFit.cover)
+                            : Icon(
+                                Icons.add_a_photo,
+                                size: 40.0,
+                                color: Colors.grey,
+                              ),
+                      ),
                     ),
-                    child: _image != null
-                        ? Image.file(_image!, fit: BoxFit.cover)
-                        : Icon(
-                            Icons.add_a_photo,
-                            size: 40.0,
-                            color: Colors.grey,
-                          ),
-                  ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                // padding: EdgeInsets.only(left: 30, top: 10),
+
+                child: Column(
+                  children: [
+                    Text('Your Rating',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                    RatingBar.builder(
+                      initialRating: 0,
+                      minRating: 0.5,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.orange,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          _rating = rating;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
               Container(
