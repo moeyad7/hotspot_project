@@ -1,14 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../compnents/cards/post.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../model/tourist_site.dart';
+import '../compnents/cards/post.dart';
 
 class VisitedScreen extends StatefulWidget {
   static const routeName = '/VisitedScreen';
@@ -72,46 +71,58 @@ class _VisitedScreenState extends State<VisitedScreen> {
                       thickness: 2,
                     ),
                     StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('locations')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-
-                          if (!snapshot.hasData || snapshot.data == null) {
-                            // Stream has no data, show a message
-                            return Center(
-                              child: Text('No data available.'),
-                            );
-                          }
-                          return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: userDocs["seen"].length,
-                            itemBuilder: (context, index) {
-                              return PostCard(
-                                touristSites: TouristSite(
-                                  id: userDocs["seen"][index],
-                                  title: snapshot.data!.docs[index]['title'],
-                                  description: snapshot.data!.docs[index]
-                                      ['description'],
-                                  imageUrl: snapshot.data!.docs[index]['image'],
-                                  category: List<String>.from(
-                                      snapshot.data!.docs[index]['categories']),
-                                  added: snapshot.data!.docs[index]['time']
-                                      .toDate(),
-                                  ratings: snapshot.data!.docs[index]
-                                      ['location'],
-                                ),
-                              );
-                            },
+                      stream: FirebaseFirestore.instance
+                          .collection('locations')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        }),
+                        }
+
+                        if (!snapshot.hasData || snapshot.data == null) {
+                          // Stream has no data, show a message
+                          return Center(
+                            child: Text('No data available.'),
+                          );
+                        }
+
+                        final locationDocs = snapshot.data!.docs;
+                        List result = [];
+                        List ids = [];
+                        for (var i = 0; i < userDocs['seen'].length; i++) {
+                          var currentId = userDocs['seen'][i];
+                          for (var j = 0; j < locationDocs.length; j++) {
+                            if (currentId == locationDocs[j].id) {
+                              result.add(locationDocs[j].data());
+                              ids.add(locationDocs[j]);
+                            }
+                          }
+                        }
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: result.length,
+                          itemBuilder: (context, index) {
+                            return PostCard(
+                              touristSites: TouristSite(
+                                id: ids[index].id,
+                                title: result[index]['title'],
+                                description: result[index]['description'],
+                                imageUrl: result[index]['image'],
+                                category: List<String>.from(
+                                    result[index]['categories']),
+                                added: result[index]['time'].toDate(),
+                                ratings: result[index]['ratings'],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    )
                   ],
                 ),
               ),

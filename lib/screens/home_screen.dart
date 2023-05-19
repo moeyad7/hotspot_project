@@ -1,13 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:Hotspot/model/tourist_site.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/cards/post.dart';
 import '../compnents/nav_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/HomePage';
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    
+  }
 
   @override
   Widget build(BuildContext context) {

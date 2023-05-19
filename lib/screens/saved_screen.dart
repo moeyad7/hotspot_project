@@ -71,45 +71,58 @@ class _SavedScreenState extends State<SavedScreen> {
                       thickness: 2,
                     ),
                     StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('locations')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-
-                          if (!snapshot.hasData || snapshot.data == null) {
-                            // Stream has no data, show a message
-                            return Center(
-                              child: Text('No data available.'),
-                            );
-                          }
-                          final locationDocs = snapshot.data!.docs;
-                          return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: userDocs["saved"].length,
-                            itemBuilder: (context, index) {
-                              return PostCard(
-                                touristSites: TouristSite(
-                                  id: userDocs["saved"][index],
-                                  title: locationDocs[index]['title'],
-                                  description: locationDocs[index]
-                                      ['description'],
-                                  imageUrl: locationDocs[index]['image'],
-                                  category: List<String>.from(
-                                      locationDocs[index]['categories']),
-                                  added: locationDocs[index]['time'].toDate(),
-                                  ratings: locationDocs[index]['ratings'],
-                                ),
-                              );
-                            },
+                      stream: FirebaseFirestore.instance
+                          .collection('locations')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        }),
+                        }
+
+                        if (!snapshot.hasData || snapshot.data == null) {
+                          // Stream has no data, show a message
+                          return Center(
+                            child: Text('No data available.'),
+                          );
+                        }
+
+                        final locationDocs = snapshot.data!.docs;
+                        List result = [];
+                        List ids = [];
+                        for (var i = 0; i < userDocs['saved'].length; i++) {
+                          var currentId = userDocs['saved'][i];
+                          for (var j = 0; j < locationDocs.length; j++) {
+                            if (currentId == locationDocs[j].id) {
+                              result.add(locationDocs[j].data());
+                              ids.add(locationDocs[j]);
+                            }
+                          }
+                        }
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: result.length,
+                          itemBuilder: (context, index) {
+                            return PostCard(
+                              touristSites: TouristSite(
+                                id: ids[index].id,
+                                title: result[index]['title'],
+                                description: result[index]['description'],
+                                imageUrl: result[index]['image'],
+                                category: List<String>.from(
+                                    result[index]['categories']),
+                                added: result[index]['time'].toDate(),
+                                ratings: result[index]['ratings'],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    )
                   ],
                 ),
               ),
