@@ -50,6 +50,7 @@ class HomePage extends StatelessWidget {
                         category: List<String>.from(
                             locationDocs[index]['categories']),
                         added: locationDocs[index]['time'].toDate(),
+                        ratings: locationDocs[index]['ratings'],
                       ),
                     );
                   },

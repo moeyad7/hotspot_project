@@ -4,6 +4,7 @@ class Arguments {
   final TouristSite touristSite;
   final bool seen;
   final bool saved;
+  final double rating;
 
-  Arguments(this.touristSite, this.seen, this.saved);
+  Arguments(this.touristSite, this.seen, this.saved, this.rating);
 }

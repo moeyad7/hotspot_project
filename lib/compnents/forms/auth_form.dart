@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 
+import '../../screens/home_screen.dart';
 import '../buttons/signInButtonCustom.dart';
 import '../textfields/textFormFieldCustom.dart';
 
@@ -111,6 +112,7 @@ class _AuthFormState extends State<AuthForm> {
           'recent_searches': [],
         });
       }
+      Navigator.of(context).pushReplacementNamed(HomePage.routeName);
     }
 
     return Center(

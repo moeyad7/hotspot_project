@@ -218,6 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 category: List<String>.from(
                                     locationDocs[index]['categories']),
                                 added: locationDocs[index]['time'].toDate(),
+                                ratings: locationDocs[index]['location'],
                               ),
                             );
                           },

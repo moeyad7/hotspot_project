@@ -8,6 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../model/arguments.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
+import '../compnents/rating/star_rating.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';
@@ -75,40 +76,55 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
-  Widget _buildRating(double oldRating, String touristSiteId) {
+  Widget _buildRating(List<dynamic> touristSiteList) {
+    double oldRating = getUserRating(touristSiteList);
     return AnimatedOpacity(
         opacity: _isVisible ? 1.0 : 0.0,
         duration: Duration(milliseconds: 500),
         curve: Curves.easeInOut,
-        child: user != null
-            ? Column(
-                children: [
-                  Text(
-                    "Your Rating",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  RatingBar.builder(
-                    initialRating: oldRating,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 30,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star_rounded,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      // print(rating);
-                    },
-                  ),
-                ],
-              )
-            : Container());
+        child: Column(
+          children: [
+            Text(
+              "Your Rating",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            RatingBar.builder(
+              initialRating: oldRating,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemSize: 30,
+              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+              itemBuilder: (context, _) => Icon(
+                Icons.star_rounded,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {
+                // print(rating);
+              },
+            ),
+          ],
+        ));
+  }
+
+  double getUserRating(List<dynamic> touristSitelist) {
+    double oldRating = 0;
+    if (touristSitelist.length == 0) {
+      return 0;
+    }
+
+    for (int i = 0; i < touristSitelist.length; i++) {
+      if (touristSitelist[i]['user_id'] == user!.uid) {
+        oldRating = touristSitelist[i]['rating'];
+        break;
+      }
+    }
+
+    return oldRating;
   }
 
   void _bottomSheet(BuildContext ctx) {
@@ -133,6 +149,7 @@ class _PostDetailState extends State<PostDetail> {
     var touristSite = args.touristSite;
     bool _seen = args.seen;
     bool _saved = args.saved;
+    double _avgRating = args.rating;
 
     return Scaffold(
       appBar: MyAppBar(context),
@@ -165,10 +182,21 @@ class _PostDetailState extends State<PostDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(child: _buildTitle(touristSite.title)),
-              SizedBox(width: 16),
               Column(
                 children: [
-                  _buildRating(touristSite.rating, touristSite.id),
+                  //average rating
+                  Text(
+                    'Average Rating',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  StarRating(
+                    starCount: 5,
+                    rating: _avgRating,
+                    color: Colors.yellow[700],
+                  ),
                   SizedBox(height: 8),
                   Row(
                     children: [
@@ -189,6 +217,8 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ],
           ),
+          // MY Rating
+          if (user != null) _buildRating(touristSite.ratings),
           SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,

@@ -78,8 +78,7 @@ class _CreatePostState extends State<CreatePost> {
       final url = await ref.getDownloadURL();
 
       // Add New Post
-      final newPost =
-          await FirebaseFirestore.instance.collection('locations').add({
+      await FirebaseFirestore.instance.collection('locations').add({
         'title': _title.text,
         'description': _description.text,
         'categories': _activeChips,
@@ -93,15 +92,6 @@ class _CreatePostState extends State<CreatePost> {
           }
         ],
       });
-
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        "ratings": FieldValue.arrayUnion([
-          {
-            "location_id": newPost.id,
-            "rating": _rating,
-          }
-        ])
-      }, SetOptions(merge: true));
 
       Navigator.of(context).pushReplacementNamed('/HomePage');
       setState(() {

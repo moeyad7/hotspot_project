@@ -261,8 +261,12 @@ class _PostCardState extends State<PostCard> {
                         Navigator.pushNamed(
                           context,
                           PostDetail.routeName,
-                          arguments:
-                              Arguments(widget.touristSites, _seen, _saved),
+                          arguments: Arguments(
+                            widget.touristSites,
+                            _seen,
+                            _saved,
+                            averageRating,
+                          ),
                         );
                       },
                     ),

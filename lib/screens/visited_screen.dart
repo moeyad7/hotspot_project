@@ -105,6 +105,8 @@ class _VisitedScreenState extends State<VisitedScreen> {
                                       snapshot.data!.docs[index]['categories']),
                                   added: snapshot.data!.docs[index]['time']
                                       .toDate(),
+                                  ratings: snapshot.data!.docs[index]
+                                      ['location'],
                                 ),
                               );
                             },
