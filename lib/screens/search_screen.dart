@@ -1,60 +1,99 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class SearchScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text(
-//           'Search for a school',
-//           style: TextStyle(
-//             fontSize: 20,
-//             color: Colors.black,
-//           ),
-//         ),
-//       ),
-//       body: Column(
-//         children: <Widget>[
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: TextField(
-//               controller: searchController,
-//               decoration: const InputDecoration(
-//                 labelText: 'Search',
-//                 hintText: 'Search for a school',
-//                 prefixIcon: Icon(Icons.search),
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.all(
-//                     Radius.circular(25.0),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: filteredSchools.length,
-//               itemBuilder: (context, index) {
-//                 return Card(
-//                   child: InkWell(
-//                     splashColor: Colors.blue.withAlpha(100),
-//                     onTap: () {
-//                       Navigator.pushNamed(context, '/school_details',
-//                           arguments: schools[index]);
-//                     },
-//                     child: ListTile(
-//                       title: Text(filteredSchools[index]['name']),
-//                       subtitle: Text(filteredSchools[index]['description']),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//       bottomNavigationBar:
-//           const NavBarComponent(selectedTab: NavigationItem.schoolSearch),
-//     );
-//   }
-// }
+import '../compnents/app_bar.dart';
+import '../compnents/nav_bar.dart';
+import '../compnents/cards/search_card.dart';
+import '../model/tourist_site.dart';
+
+class SearchScreen extends StatefulWidget {
+  static const routeName = '/SearchScreen';
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  String title = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyAppBar(context),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  title = value;
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('locations')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var data = snapshot.data!.docs[index].data()
+                        as Map<String, dynamic>;
+                    if (title.isEmpty) {
+                      return SearchCard(
+                        touristSite: TouristSite(
+                          id: snapshot.data!.docs[index].id,
+                          title: data['title'],
+                          description: data['description'],
+                          imageUrl: data['image'],
+                          category: List<String>.from(data['categories']),
+                          added: data['time'].toDate(),
+                          ratings: data['ratings'],
+                        ),
+                      );
+                    }
+                    if (data['title']
+                        .toString()
+                        .toLowerCase()
+                        .startsWith(title.toLowerCase())) {
+                      return SearchCard(
+                        touristSite: TouristSite(
+                          id: snapshot.data!.docs[index].id,
+                          title: data['title'],
+                          description: data['description'],
+                          imageUrl: data['image'],
+                          category: List<String>.from(data['categories']),
+                          added: data['time'].toDate(),
+                          ratings: data['ratings'],
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.search),
+    );
+  }
+}
