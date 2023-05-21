@@ -117,32 +117,28 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   Widget _buildChips() {
-    return _isLoading
-        ? Center(
-            child: CircularProgressIndicator(),
-          )
-        : Wrap(
-            spacing: 8.0,
-            runSpacing: 8.0,
-            children: _inactiveChips
-                .map((chip) => ChoiceChip(
-                      label: Text(
-                        chip,
-                        style: TextStyle(
-                          color: _activeChips.contains(chip)
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ),
-                      selected: _activeChips.contains(chip),
-                      onSelected: (selected) => _activateChip(selected, chip),
-                      selectedColor: Colors.blue,
-                      backgroundColor: _activeChips.contains(chip)
-                          ? Color(0xFF228CE5).withOpacity(0.4)
-                          : Color(0xFF228CE5).withOpacity(0.4),
-                    ))
-                .toList(),
-          );
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: _inactiveChips
+          .map((chip) => ChoiceChip(
+                label: Text(
+                  chip,
+                  style: TextStyle(
+                    color: _activeChips.contains(chip)
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+                selected: _activeChips.contains(chip),
+                onSelected: (selected) => _activateChip(selected, chip),
+                selectedColor: Colors.blue,
+                backgroundColor: _activeChips.contains(chip)
+                    ? Color(0xFF228CE5).withOpacity(0.4)
+                    : Color(0xFF228CE5).withOpacity(0.4),
+              ))
+          .toList(),
+    );
   }
 
   void _activateChip(bool selected, String chip) {
@@ -171,149 +167,153 @@ class _CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(context),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 20, left: 10, right: 10),
-                child: Text('New Post',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )),
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 15),
-                child: TextField(
-                  controller: _title,
-                  decoration: InputDecoration(
-                    labelText: "Title",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                  ),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 30, right: 30),
-                height: MediaQuery.of(context).size.width * 0.4,
-                child: TextField(
-                    controller: _description,
-                    maxLines: 10,
-                    decoration: InputDecoration(
-                      labelText: "Description",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFF58A07).withOpacity(0.3),
-                    ),
-                    style: TextStyle(
-                      fontSize: 18,
-                    )),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(left: 30, top: 10),
-                child: Text('Categories',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 30, top: 10, right: 30),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(children: [
-                    Wrap(
-                        spacing: 3.0,
-                        // gap between adjacent chips
-                        children: [_buildChips()]),
-                  ]),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: _getImage,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(10.0),
+                    Container(
+                      padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+                      child: Text('New Post',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 30, right: 30, bottom: 20, top: 15),
+                      child: TextField(
+                        controller: _title,
+                        decoration: InputDecoration(
+                          labelText: "Title",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xFFF58A07).withOpacity(0.3),
                         ),
-                        child: _image != null
-                            ? Image.file(_image!, fit: BoxFit.cover)
-                            : Icon(
-                                Icons.add_a_photo,
-                                size: 40.0,
-                                color: Colors.grey,
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                // padding: EdgeInsets.only(left: 30, top: 10),
-
-                child: Column(
-                  children: [
-                    Text('Your Rating',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        )),
-                    RatingBar.builder(
-                      initialRating: 0,
-                      minRating: 0.5,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.orange,
+                        ),
                       ),
-                      onRatingUpdate: (rating) {
-                        setState(() {
-                          _rating = rating;
-                        });
-                      },
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 30, right: 30),
+                      height: MediaQuery.of(context).size.width * 0.4,
+                      child: TextField(
+                          controller: _description,
+                          maxLines: 10,
+                          decoration: InputDecoration(
+                            labelText: "Description",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFF58A07).withOpacity(0.3),
+                          ),
+                          style: TextStyle(
+                            fontSize: 18,
+                          )),
+                    ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.only(left: 30, top: 10),
+                      child: Text('Categories',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 30, top: 10, right: 30),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(children: [
+                          Wrap(
+                              spacing: 3.0,
+                              // gap between adjacent chips
+                              children: [_buildChips()]),
+                        ]),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: _getImage,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 200.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: _image != null
+                                  ? Image.file(_image!, fit: BoxFit.cover)
+                                  : Icon(
+                                      Icons.add_a_photo,
+                                      size: 40.0,
+                                      color: Colors.grey,
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      // padding: EdgeInsets.only(left: 30, top: 10),
+
+                      child: Column(
+                        children: [
+                          Text('Your Rating',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          RatingBar.builder(
+                            initialRating: 0,
+                            minRating: 0.5,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.orange,
+                            ),
+                            onRatingUpdate: (rating) {
+                              setState(() {
+                                _rating = rating;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      margin: EdgeInsets.only(top: 20),
+                      child: CustomButton(
+                        name: 'Post',
+                        color: Color(0xFF2FC686),
+                        pressFunction: _createPost,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                margin: EdgeInsets.only(top: 20),
-                child: CustomButton(
-                  name: 'Post',
-                  color: Color(0xFF2FC686),
-                  pressFunction: _createPost,
-                ),
-              ),
-            ],
-          ),
-        ),
         bottomNavigationBar: NavBarComponent(
           selectedTab: NavigationItem.add,
         ));
