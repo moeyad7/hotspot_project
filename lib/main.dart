@@ -9,6 +9,7 @@ import './screens/auth_screen.dart';
 import './screens/saved_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
+import 'compnents/notifications/notifications.dart';
 import 'screens/account_required.dart';
 import 'screens/post_details_screen.dart';
 import './screens/create_post_screen.dart';
@@ -31,7 +32,11 @@ final customSwatch = MaterialColor(
   },
 );
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  NotificationService().initNotification();
+  
   await Firebase.initializeApp();
   runApp(MyApp());
 }

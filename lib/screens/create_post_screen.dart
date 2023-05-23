@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
+import '../compnents/notifications/notifications.dart';
 import '../screens/account_required.dart';
 import '../compnents/buttons/buttons.dart';
 
@@ -92,7 +93,8 @@ class _CreatePostState extends State<CreatePost> {
           }
         ],
       });
-
+      NotificationService()
+          .showNotification(title: 'Notification', body: 'Post Created');
       Navigator.of(context).pushReplacementNamed('/HomePage');
       setState(() {
         _isLoading = false;
