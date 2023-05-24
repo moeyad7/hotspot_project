@@ -7,14 +7,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/saved_screen.dart';
+import './screens/search_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
-import 'compnents/notifications/notifications.dart';
 import 'screens/account_required.dart';
 import 'screens/post_details_screen.dart';
 import './screens/create_post_screen.dart';
 import './screens/edit_profile_screen.dart';
-import 'screens/search_screen.dart';
+import 'compnents/notifications/notifications.dart';
 
 final customSwatch = MaterialColor(
   0xFFF58A07,

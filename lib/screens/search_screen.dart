@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../compnents/cards/search_card.dart';
 import '../model/tourist_site.dart';
+import '../compnents/cards/search_card.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = '/SearchScreen';

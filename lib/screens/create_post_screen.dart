@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
-import '../compnents/notifications/notifications.dart';
 import '../screens/account_required.dart';
 import '../compnents/buttons/buttons.dart';
+import '../compnents/notifications/notifications.dart';
 
 class CreatePost extends StatefulWidget {
   static const routeName = '/PostCreate';

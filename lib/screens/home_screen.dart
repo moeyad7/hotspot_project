@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../compnents/app_bar.dart';
-import '../compnents/cards/post.dart';
 import '../compnents/nav_bar.dart';
+import '../compnents/cards/post.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/HomePage';
