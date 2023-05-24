@@ -26,11 +26,7 @@ class NavBarComponent extends StatelessWidget {
             break;
           case NavigationItem.profile:
             Navigator.popAndPushNamed(context, '/ProfileScreen');
-            break;
-          case NavigationItem.trending:
-            Navigator.popAndPushNamed(context, '/Trending');
-            break;
-          
+            break;          
         }
       },
       items: const [
@@ -50,13 +46,9 @@ class NavBarComponent extends StatelessWidget {
           icon: Icon(Icons.person),
           label: 'Profile',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.trending_up),
-          label: 'Trending',
-        ),
       ],
     );
   }
 }
 
-enum NavigationItem { home, search, add, profile, trending }
+enum NavigationItem { home, search, add, profile}
