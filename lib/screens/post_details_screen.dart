@@ -1,4 +1,3 @@
-
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import '../model/arguments.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
 import '../compnents/rating/star_rating.dart';
+import './comments_screen.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';
@@ -144,21 +144,6 @@ class _PostDetailState extends State<PostDetail> {
     }
 
     return oldRating;
-  }
-
-  void _bottomSheet(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          child: Container(
-            child: Text('!!!!!!!!E3mel el comments ya mohamed!!!!!!!!'),
-          ),
-          behavior: HitTestBehavior.opaque,
-        );
-      },
-    );
   }
 
   @override
@@ -307,7 +292,10 @@ class _PostDetailState extends State<PostDetail> {
                 type: 'elevated',
                 icon: Icons.comment,
                 pressFunction: () {
-                  _bottomSheet(context);
+                  Navigator.of(context).pushNamed(
+                    CommentsScreen.routeName,
+                    arguments: touristSite.id,
+                  );
                 },
               ),
             ],

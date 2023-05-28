@@ -18,6 +18,7 @@ AppBar MyAppBar(BuildContext context) {
     backgroundColor: Color(0xFFF58A07),
     actions: [
       DropdownButton(
+        underline: Container(),
         icon: Icon(
           Icons.more_vert,
           color: Theme.of(context).primaryIconTheme.color,
