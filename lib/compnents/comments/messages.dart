@@ -39,6 +39,19 @@ class _MessagesState extends State<Messages> {
                   child: CircularProgressIndicator(),
                 );
               }
+              // if there are no comments yet then show a message to the user
+              if (commentsSnapshot.data!.docs.length == 0) {
+                return Center(
+                  child: Text(
+                    'No Comments Yet',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 20,
+                    ),
+                  ),
+                );
+              }
+
               final commentdocs = commentsSnapshot.data!.docs;
               return ListView.builder(
                 reverse: true,
