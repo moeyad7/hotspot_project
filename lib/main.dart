@@ -11,6 +11,7 @@ import './screens/search_screen.dart';
 import './screens/visited_screen.dart';
 import './screens/profile_screen.dart';
 import 'screens/account_required.dart';
+import './screens/comments_screen.dart';
 import 'screens/post_details_screen.dart';
 import './screens/create_post_screen.dart';
 import './screens/edit_profile_screen.dart';
@@ -108,6 +109,7 @@ class MyApp extends StatelessWidget {
         CreatePost.routeName: (context) => CreatePost(),
         AccountRequiredScreen.routeName: (context) => AccountRequiredScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
+        CommentsScreen.routeName: (context) => CommentsScreen(), 
       },
     );
   }
