@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           displaySmall: TextStyle(color: Colors.black),
           headlineMedium: TextStyle(color: Colors.black),
           headlineSmall: TextStyle(color: Colors.black),
-          titleLarge: TextStyle(color: Colors.black),
+          titleLarge: TextStyle(color: Colors.black), 
           titleMedium: TextStyle(color: Colors.black),
           titleSmall: TextStyle(color: Colors.black),
           bodyLarge: TextStyle(color: Colors.black),
