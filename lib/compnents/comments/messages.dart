@@ -5,11 +5,18 @@ import './message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Messages extends StatelessWidget {
+class Messages extends StatefulWidget {
   final String siteID;
   Messages({required this.siteID});
+
+  @override
+  State<Messages> createState() => _MessagesState();
+}
+
+class _MessagesState extends State<Messages> {
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return FutureBuilder(
       future: Future.value(FirebaseAuth.instance.currentUser),
       builder: (ctx, futureSnapshot) {
@@ -22,7 +29,7 @@ class Messages extends StatelessWidget {
         return StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('locations')
-                .doc(siteID)
+                .doc(widget.siteID)
                 .collection('comments')
                 .orderBy('createdAt', descending: true)
                 .snapshots(),
@@ -40,7 +47,9 @@ class Messages extends StatelessWidget {
                   commentdocs[index]['text'],
                   commentdocs[index]['username'],
                   commentdocs[index]['userImage'],
-                  commentdocs[index]['userId'] == futureSnapshot.data!.uid,
+                  user != null
+                      ? commentdocs[index]['userId'] == futureSnapshot.data!.uid
+                      : false,
                   key: ValueKey(commentdocs[index].id),
                 ),
               );
