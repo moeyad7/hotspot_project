@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../notifications/notifications.dart';
 
 class NewMessage extends StatefulWidget {
   final String siteID;
@@ -31,6 +32,8 @@ class _NewMessageState extends State<NewMessage> {
       'userImage': userData['image_url'],
     });
     _controller.clear();
+    NotificationService()
+        .showNotification(title: 'Comments', body: 'New Comment Added');
   }
 
   @override
