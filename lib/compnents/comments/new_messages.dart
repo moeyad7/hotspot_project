@@ -12,10 +12,13 @@ class NewMessage extends StatefulWidget {
 class _NewMessageState extends State<NewMessage> {
   final _controller = new TextEditingController();
   var _enteredMessage = '';
-  void _sendMessage()  async{
+  void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    final user = await FirebaseAuth.instance.currentUser; 
-    final userData = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+    final user = await FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
     FirebaseFirestore.instance
         .collection('locations')
         .doc(widget.siteID)
@@ -25,6 +28,7 @@ class _NewMessageState extends State<NewMessage> {
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'username': userData['username'],
+      'userImage': userData['image_url'],
     });
     _controller.clear();
   }
@@ -38,6 +42,9 @@ class _NewMessageState extends State<NewMessage> {
         Expanded(
           child: TextField(
             controller: _controller,
+            textCapitalization: TextCapitalization.sentences,
+            autocorrect: true,
+            enableSuggestions: true,
             decoration: InputDecoration(labelText: 'Write a comment '),
             onChanged: (value) {
               setState(() {
