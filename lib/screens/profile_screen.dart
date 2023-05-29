@@ -69,8 +69,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: MyAppBar(context),
       body: isLoading == true
           ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: [Container(
+          : Column(children: [
+              Container(
                 margin: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,22 +99,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Center(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '169',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      'Comments',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
                               SizedBox(height: 10),
                               CustomButton(
                                 name: 'Saved • ' + _saved.toString(),
@@ -196,7 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 touristSites: TouristSite(
                                   id: locationDocs[index].id,
                                   title: locationDocs[index]['title'],
-                                  description: locationDocs[index]['description'],
+                                  description: locationDocs[index]
+                                      ['description'],
                                   imageUrl: locationDocs[index]['image'],
                                   category: List<String>.from(
                                       locationDocs[index]['categories']),
@@ -211,8 +196,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-              ),]
-            ),
+              ),
+            ]),
       bottomNavigationBar: NavBarComponent(selectedTab: NavigationItem.profile),
     );
   }

@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import './comments_screen.dart';
 import '../model/arguments.dart';
 import '../compnents/app_bar.dart';
 import '../compnents/buttons/buttons.dart';
 import '../compnents/rating/star_rating.dart';
-import './comments_screen.dart';
 
 class PostDetail extends StatefulWidget {
   static const routeName = '/post-detail';

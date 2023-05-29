@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import './message_bubble.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import './message_bubble.dart';
 class Messages extends StatefulWidget {
   final String siteID;
   Messages({required this.siteID});
