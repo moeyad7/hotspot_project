@@ -77,7 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           await user.updatePassword(newPassword);
         }
       }
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed('/ProfileScreen');
     } on PlatformException catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
@@ -99,9 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } catch (err) {
       var message = 'An error occurred, please check your credentials!';
 
-      
       message = err.toString().split(']')[1].trim();
-      
 
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(

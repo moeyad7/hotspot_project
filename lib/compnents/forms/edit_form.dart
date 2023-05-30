@@ -36,6 +36,7 @@ class _EditFormState extends State<EditForm> {
   var _profileImage;
   var _oldPassword = '';
   var _newPassword = '';
+  String _userDateOfBirth = '';
 
   var _userImage;
 
@@ -66,7 +67,7 @@ class _EditFormState extends State<EditForm> {
     _userImage = image;
   }
 
-  void _getPasswords(String oldpass,String newpass){
+  void _getPasswords(String oldpass, String newpass) {
     _oldPassword = oldpass;
     _newPassword = newpass;
   }
@@ -80,7 +81,7 @@ class _EditFormState extends State<EditForm> {
       widget.submitFn(
         _userEmail,
         _userName.text.trim(),
-        _dateOfBirth.text.trim(),
+        _userDateOfBirth,
         context,
         newImage: _userImage,
         oldPassword: _oldPassword.trim() == '' ? null : _oldPassword.trim(),
@@ -126,6 +127,12 @@ class _EditFormState extends State<EditForm> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a date of birth.';
+                    }
+                    return null;
+                  },
                   controller: _dateOfBirth,
                   decoration: InputDecoration(
                     labelText: "Date of birth",
@@ -138,13 +145,28 @@ class _EditFormState extends State<EditForm> {
                   onTap: () async {
                     DateTime date = DateTime(1900);
                     FocusScope.of(context).requestFocus(new FocusNode());
+
                     date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now()) as DateTime;
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData.light().copyWith(
+                            colorScheme: ColorScheme.light(
+                              primary: Color(0xFFF58A07),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
+                    ) as DateTime;
 
                     _dateOfBirth.text = DateFormat('dd/MM/yyyy').format(date);
+                  },
+                  onSaved: (value) {
+                    _userDateOfBirth = value!;
                   },
                 ),
                 SizedBox(height: 10),
@@ -170,8 +192,8 @@ class _EditFormState extends State<EditForm> {
                         //change the password
                         showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) =>
-                              ChangePasswordForm(_oldPassword, _newPassword,_getPasswords),
+                          builder: (BuildContext context) => ChangePasswordForm(
+                              _oldPassword, _newPassword, _getPasswords),
                         );
                       },
                     ),
