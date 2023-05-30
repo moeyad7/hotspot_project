@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter/material.dart';
 
 import '../compnents/app_bar.dart';
 import '../compnents/nav_bar.dart';
 import '../screens/auth_screen.dart';
 import '../compnents/buttons/buttons.dart';
-import 'package:lottie/lottie.dart';
-
 
 class AccountRequiredScreen extends StatelessWidget {
   const AccountRequiredScreen({Key? key}) : super(key: key);
@@ -22,12 +20,12 @@ class AccountRequiredScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Lottie.asset(
-  'icons/CreateAccount.json',
-  width: 300,
-  height: 300,
-  fit: BoxFit.cover,
-  repeat: true,
-),
+                'icons/CreateAccount.json',
+                width: 300,
+                height: 300,
+                fit: BoxFit.cover,
+                repeat: true,
+              ),
               Text(
                 'You must have an account to access this page.',
                 style: TextStyle(fontSize: 20),

@@ -9,7 +9,6 @@ import '../compnents/nav_bar.dart';
 import '../model/tourist_site.dart';
 import '../compnents/cards/post.dart';
 
-
 class SavedScreen extends StatefulWidget {
   static const routeName = '/SavedScreen';
 
@@ -113,8 +112,8 @@ class _SavedScreenState extends State<SavedScreen> {
                               title: result[index]['title'],
                               description: result[index]['description'],
                               imageUrl: result[index]['image'],
-                              category:
-                                  List<String>.from(result[index]['categories']),
+                              category: List<String>.from(
+                                  result[index]['categories']),
                               added: result[index]['time'].toDate(),
                               ratings: result[index]['ratings'],
                             ),
